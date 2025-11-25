@@ -1,8 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+
+type RoadmapSection = {
+  title: string;
+  items: string[];
+};
+
+type SlideVariant = 'default' | 'split' | 'roadmap';
 
 type Slide = {
   id: string;
@@ -11,6 +19,10 @@ type Slide = {
   bullets?: string[];
   highlight?: string;
   footer?: string;
+  image?: string; // caminho em /public, ex: /gc-assets/team-collab.png
+  imageAlt?: string;
+  variant?: SlideVariant;
+  roadmap?: RoadmapSection[]; // usado só no slide de roadmap
 };
 
 const slides: Slide[] = [
@@ -18,7 +30,11 @@ const slides: Slide[] = [
     id: 'capa',
     title: 'Gente e Cultura T.Group',
     subtitle: 'Análise do cenário atual e plano 2026',
-    highlight: 'De um exército de uma só pessoa para um sistema de pessoas da holding.'
+    highlight:
+      'De um exército de uma só pessoa para um sistema de pessoas da holding.',
+    image: '/gc-assets/gc-cover.png',
+    imageAlt: 'Equipe colaborando em frente a telas e gráficos.',
+    variant: 'split'
   },
   {
     id: 'contexto',
@@ -29,7 +45,11 @@ const slides: Slide[] = [
       'Essência: criar experiências relevantes para pessoas, marcas e públicos diversos.',
       'Base do negócio: times jovens, criativos e intensos, com prazos curtos e alta expectativa de entrega.'
     ],
-    footer: 'Contexto geral do negócio e da importância de Gente e Cultura para a holding.'
+    footer:
+      'Contexto geral do negócio e da importância de Gente e Cultura para a holding.',
+    image: '/gc-assets/tgroup-overview.png',
+    imageAlt: 'Representação visual das empresas do T.Group.',
+    variant: 'split'
   },
   {
     id: 'gc-hoje',
@@ -40,7 +60,10 @@ const slides: Slide[] = [
       'Responsável por recrutamento, admissões, desligamentos, benefícios e interface com financeiro/contabilidade.',
       'Guardião da cultura, rituais internos e “cara interna” do T.Group.',
       'Sponsor de Facilities e da gestão da sede, além de criador de ferramentas digitais internas.'
-    ]
+    ],
+    image: '/gc-assets/gc-hub.png',
+    imageAlt: 'Hub de conexões representando Gente e Cultura.',
+    variant: 'split'
   },
   {
     id: 'escopo-geral',
@@ -58,6 +81,7 @@ const slides: Slide[] = [
       'Benefícios e proposta de valor ao colaborador.'
     ]
   },
+    // --- demais slides continuam em variant "default" ---
   {
     id: 'rs',
     title: '3.1. Recrutamento e Seleção',
@@ -122,7 +146,10 @@ const slides: Slide[] = [
       'Aniversariantes do mês, Happy Hour, agenda de massagista e manicure.',
       'Confraternização anual do grupo e apoio a confraternizações por empresa.',
       'Rituais fundamentais para engajamento, mas operados 100% de forma manual por GC.'
-    ]
+    ],
+    image: '/gc-assets/culture-events.png',
+    imageAlt: 'Pessoas celebrando em um evento interno.',
+    variant: 'split'
   },
   {
     id: 'facilities',
@@ -265,11 +292,44 @@ const slides: Slide[] = [
   {
     id: 'roadmap',
     title: '8. Roadmap 2026 – visão geral',
-    bullets: [
-      'Q4 2025: aprovação do plano, desenho de organograma, mapeamento de processos, Jornada 0–90 e calendário GC.',
-      'Q1 2026: contratação do Analista de DP, início do playbook de R&S, primeiro Encontro de Boas-Vindas, MVP de intranet, pesquisa de benefícios.',
-      'Q2 2026: Analista assumindo rotinas de DP, implementação do ciclo de performance, definição/implantação de novo pacote de benefícios, intranet GC/Facilities no ar.',
-      'Q4 2026: primeiro ciclo de performance concluído, revisão do modelo de DP, consolidação do programa de reconhecimento e apresentação de resultados de GC 2026 aos sócios.'
+    variant: 'roadmap',
+    roadmap: [
+      {
+        title: 'Q1 2026',
+        items: [
+          'Aprovação da visão e do plano de GC com os sócios.',
+          'Desenho do organograma de GC e da vaga de DP/People Ops.',
+          'Mapeamento de processos de DP/People Ops.',
+          'Jornada 0–90 dias e calendário anual de GC.'
+        ]
+      },
+      {
+        title: 'Q2 2026',
+        items: [
+          'Contratação do Analista de DP/People Ops.',
+          'Implementação do playbook de R&S.',
+          'Primeiro Encontro de Boas-Vindas T.Group.',
+          'MVP da intranet e pesquisa interna de benefícios.'
+        ]
+      },
+      {
+        title: 'Q3 2026',
+        items: [
+          'Analista de DP assumindo boa parte das rotinas operacionais.',
+          'Implementação do ciclo de performance.',
+          'Definição/implantação do pacote de benefícios.',
+          'Intranet GC/Facilities ativa com conteúdos-chave.'
+        ]
+      },
+      {
+        title: 'Q4 2026',
+        items: [
+          'Primeiro ciclo de performance concluído.',
+          'Revisão do modelo de DP interno.',
+          'Consolidação do programa de reconhecimento por tempo de casa.',
+          'Apresentação dos resultados de GC 2026 aos sócios.'
+        ]
+      }
     ]
   },
   {
@@ -330,6 +390,160 @@ export default function GC2026DeckPage() {
     return () => window.removeEventListener('keydown', handleKey as any);
   });
 
+  const renderRoadmap = (sections: RoadmapSection[]) => (
+    <div className="mt-4">
+      <div className="mb-4 text-sm sm:text-base text-slate-300">
+        Linha do tempo dos principais marcos de Gente e Cultura em 2026.
+      </div>
+      <div className="relative mt-4">
+        {/* linha central */}
+        <div className="absolute inset-x-4 top-1/2 h-px bg-slate-500/40 sm:inset-x-10" />
+        <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {sections.map((section, i) => (
+            <div
+              key={section.title}
+              className="relative flex flex-col gap-2 rounded-2xl bg-slate-950/40 border border-white/15 px-4 py-4 backdrop-blur-xl"
+            >
+              {/* nó na linha */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center justify-center">
+                <div className="h-3 w-3 rounded-full bg-fuchsia-400 shadow-[0_0_12px_rgba(244,114,182,0.9)]" />
+              </div>
+              <h3 className="text-sm sm:text-base font-semibold text-slate-50">
+                {section.title}
+              </h3>
+              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-200/90">
+                {section.items.map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-1 h-1 w-1 rounded-full bg-fuchsia-300/90" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderSlideContent = (slide: Slide) => {
+    const variant: SlideVariant = slide.variant ?? 'default';
+
+    // ROADMAP
+    if (variant === 'roadmap' && slide.roadmap) {
+      return (
+        <div className="relative flex flex-col gap-4">
+          <div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-slate-50">
+              {slide.title}
+            </h1>
+            {slide.subtitle && (
+              <p className="mt-1 text-base sm:text-lg text-slate-200">
+                {slide.subtitle}
+              </p>
+            )}
+          </div>
+          {renderRoadmap(slide.roadmap)}
+        </div>
+      );
+    }
+
+    // SPLIT (texto + imagem)
+    if (variant === 'split') {
+      return (
+        <div className="relative grid gap-6 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] items-center">
+          <div className="flex flex-col gap-4">
+            <div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-slate-50">
+                {slide.title}
+              </h1>
+              {slide.subtitle && (
+                <p className="mt-1 text-base sm:text-lg text-slate-200">
+                  {slide.subtitle}
+                </p>
+              )}
+            </div>
+
+            {slide.highlight && (
+              <p className="mt-2 text-base sm:text-lg text-slate-100/90 border-l-2 border-fuchsia-400/80 pl-3">
+                {slide.highlight}
+              </p>
+            )}
+
+            {slide.bullets && (
+              <ul className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90">
+                {slide.bullets.map((item, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-fuchsia-400/90" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {slide.footer && (
+              <p className="mt-4 text-xs sm:text-sm text-slate-400">
+                {slide.footer}
+              </p>
+            )}
+          </div>
+
+          {slide.image && (
+            <div className="relative h-52 sm:h-64 md:h-72 rounded-3xl overflow-hidden border border-white/20 bg-slate-950/40 backdrop-blur-xl">
+              <Image
+                src={slide.image}
+                alt={slide.imageAlt ?? ''}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 400px, 100vw"
+                priority={slide.id === 'capa'}
+              />
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // DEFAULT
+    return (
+      <div className="relative flex flex-col gap-4">
+        <div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-slate-50">
+            {slide.title}
+          </h1>
+          {slide.subtitle && (
+            <p className="mt-1 text-base sm:text-lg text-slate-200">
+              {slide.subtitle}
+            </p>
+          )}
+        </div>
+
+        {slide.highlight && (
+          <p className="mt-2 text-base sm:text-lg text-slate-100/90 border-l-2 border-fuchsia-400/80 pl-3">
+            {slide.highlight}
+          </p>
+        )}
+
+        {slide.bullets && (
+          <ul className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90">
+            {slide.bullets.map((item, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-fuchsia-400/90" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {slide.footer && (
+          <p className="mt-4 text-xs sm:text-sm text-slate-400">
+            {slide.footer}
+          </p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50 flex flex-col items-center justify-center relative overflow-hidden">
       {/* Glow / background blobs */}
@@ -340,22 +554,22 @@ export default function GC2026DeckPage() {
       </div>
 
       {/* Header */}
-      <header className="z-10 w-full max-w-6xl flex justify-between items-center px-4 sm:px-8 mb-4">
+      <header className="z-10 w-full max-w-7xl flex justify-between items-center px-4 sm:px-8 mb-4">
         <div className="flex flex-col gap-1">
           <span className="text-xs uppercase tracking-[0.25em] text-slate-400">
             T.Group • Gente e Cultura
           </span>
-          <span className="text-sm text-slate-300">
+          <span className="text-sm sm:text-base text-slate-300">
             Plano 2026 • Slide {index + 1} de {total}
           </span>
         </div>
-        <div className="flex items-center gap-2 text-xs text-slate-400">
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400">
           <span>Setas ← → ou espaço para navegar</span>
         </div>
       </header>
 
       {/* Slide card */}
-      <main className="z-10 w-full max-w-6xl px-4 sm:px-8">
+      <main className="z-10 w-full max-w-7xl px-4 sm:px-8">
         <AnimatePresence custom={direction} mode="wait">
           <motion.section
             key={current.id}
@@ -365,72 +579,36 @@ export default function GC2026DeckPage() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.35, ease: 'easeInOut' }}
-            className="relative rounded-3xl border border-white/15 bg-white/8 bg-clip-padding backdrop-blur-2xl shadow-[0_0_80px_rgba(15,23,42,0.9)] px-6 sm:px-10 py-8 sm:py-10 overflow-hidden"
+            className="relative rounded-3xl border border-white/15 bg-white/8 bg-clip-padding backdrop-blur-2xl shadow-[0_0_80px_rgba(15,23,42,0.9)] px-6 sm:px-10 py-8 sm:py-10 md:py-12 overflow-hidden"
           >
             {/* subtle overlay */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5" />
 
-            <div className="relative flex flex-col gap-4">
-              {/* Title */}
-              <div>
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-slate-50">
-                  {current.title}
-                </h1>
-                {current.subtitle && (
-                  <p className="mt-1 text-sm sm:text-base text-slate-300">
-                    {current.subtitle}
-                  </p>
-                )}
-              </div>
-
-              {/* Highlight text */}
-              {current.highlight && (
-                <p className="mt-2 text-sm sm:text-base md:text-lg text-slate-100/90 border-l-2 border-fuchsia-400/80 pl-3">
-                  {current.highlight}
-                </p>
-              )}
-
-              {/* Bullets */}
-              {current.bullets && (
-                <ul className="mt-3 space-y-2 text-sm sm:text-base text-slate-100/90">
-                  {current.bullets.map((item, i) => (
-                    <li key={i} className="flex gap-3">
-                      <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-fuchsia-400/90" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* Footer */}
-              {current.footer && (
-                <p className="mt-4 text-xs sm:text-sm text-slate-400">
-                  {current.footer}
-                </p>
-              )}
+            <div className="relative">
+              {renderSlideContent(current)}
             </div>
           </motion.section>
         </AnimatePresence>
       </main>
 
       {/* Controls + progress */}
-      <footer className="z-10 mt-4 mb-6 w-full max-w-6xl px-4 sm:px-8 flex items-center justify-between gap-4">
+      <footer className="z-10 mt-4 mb-6 w-full max-w-7xl px-4 sm:px-8 flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <button
             onClick={() => goTo(index - 1)}
             disabled={index === 0}
-            className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs sm:text-sm text-slate-50 disabled:opacity-40 disabled:cursor-default hover:bg-white/20 transition-colors"
+            className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs sm:text-sm md:text-base text-slate-50 disabled:opacity-40 disabled:cursor-default hover:bg-white/20 transition-colors"
           >
-            <ArrowLeft className="h-3 w-3" />
+            <ArrowLeft className="h-3 w-3 md:h-4 md:w-4" />
             Anterior
           </button>
           <button
             onClick={() => goTo(index + 1)}
             disabled={index === total - 1}
-            className="inline-flex items-center gap-1 rounded-full border border-fuchsia-400/40 bg-fuchsia-500/80 px-3 py-1.5 text-xs sm:text-sm text-slate-50 disabled:opacity-40 disabled:cursor-default hover:bg-fuchsia-500 transition-colors"
+            className="inline-flex items-center gap-1 rounded-full border border-fuchsia-400/40 bg-fuchsia-500/80 px-3 py-1.5 text-xs sm:text-sm md:text-base text-slate-50 disabled:opacity-40 disabled:cursor-default hover:bg-fuchsia-500 transition-colors"
           >
             Próximo
-            <ArrowRight className="h-3 w-3" />
+            <ArrowRight className="h-3 w-3 md:h-4 md:w-4" />
           </button>
         </div>
 

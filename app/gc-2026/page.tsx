@@ -5,9 +5,7 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-// Tipos auxiliares
 type SlideVariant = 'default' | 'roadmap' | 'devices';
-
 type SlideAccent = 'fuchsia' | 'sky' | 'emerald' | 'amber';
 
 type RoadmapSection = {
@@ -35,8 +33,6 @@ type Slide = {
   highlightWords?: string[];
 };
 
-// --------- helpers de visual ---------
-
 const accentConfig: Record<
   SlideAccent,
   {
@@ -45,35 +41,47 @@ const accentConfig: Record<
     highlightText: string;
     buttonPrimary: string;
     buttonBorder: string;
+    titleGradient: string;
+    haloBg: string;
   }
 > = {
   fuchsia: {
     bulletDot: 'bg-fuchsia-400/90',
     highlightBorder: 'border-fuchsia-400/80',
     highlightText: 'text-fuchsia-300',
-    buttonPrimary: 'border-fuchsia-400/40 bg-fuchsia-500/80 hover:bg-fuchsia-500',
-    buttonBorder: 'border-white/20'
+    buttonPrimary:
+      'border-fuchsia-400/40 bg-fuchsia-500/80 hover:bg-fuchsia-500',
+    buttonBorder: 'border-white/20',
+    titleGradient: 'from-fuchsia-300 via-fuchsia-100 to-sky-300',
+    haloBg: 'from-fuchsia-500/25 via-fuchsia-400/10 to-transparent'
   },
   sky: {
     bulletDot: 'bg-sky-400/90',
     highlightBorder: 'border-sky-400/80',
     highlightText: 'text-sky-300',
     buttonPrimary: 'border-sky-400/40 bg-sky-500/80 hover:bg-sky-500',
-    buttonBorder: 'border-white/20'
+    buttonBorder: 'border-white/20',
+    titleGradient: 'from-sky-300 via-sky-100 to-emerald-300',
+    haloBg: 'from-sky-500/25 via-sky-400/10 to-transparent'
   },
   emerald: {
     bulletDot: 'bg-emerald-400/90',
     highlightBorder: 'border-emerald-400/80',
     highlightText: 'text-emerald-300',
-    buttonPrimary: 'border-emerald-400/40 bg-emerald-500/80 hover:bg-emerald-500',
-    buttonBorder: 'border-white/20'
+    buttonPrimary:
+      'border-emerald-400/40 bg-emerald-500/80 hover:bg-emerald-500',
+    buttonBorder: 'border-white/20',
+    titleGradient: 'from-emerald-300 via-emerald-100 to-sky-300',
+    haloBg: 'from-emerald-500/25 via-emerald-400/10 to-transparent'
   },
   amber: {
     bulletDot: 'bg-amber-400/90',
     highlightBorder: 'border-amber-400/80',
     highlightText: 'text-amber-300',
     buttonPrimary: 'border-amber-400/40 bg-amber-500/80 hover:bg-amber-500',
-    buttonBorder: 'border-white/20'
+    buttonBorder: 'border-white/20',
+    titleGradient: 'from-amber-300 via-amber-100 to-fuchsia-300',
+    haloBg: 'from-amber-500/25 via-amber-400/10 to-transparent'
   }
 };
 
@@ -83,13 +91,13 @@ const cardVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 80 : -80,
     opacity: 0,
-    scale: 0.98
+    scale: 0.99
   }),
   center: { x: 0, opacity: 1, scale: 1 },
   exit: (direction: number) => ({
     x: direction > 0 ? -80 : 80,
     opacity: 0,
-    scale: 0.98
+    scale: 0.99
   })
 };
 
@@ -122,16 +130,13 @@ function renderHighlightedText(
     `(${highlightWords.map((w) => escapeRegExp(w)).join('|')})`,
     'gi'
   );
-
   const accentClass = accentConfig[accent].highlightText;
-
   const parts = text.split(regex);
 
   return parts.map((part, i) => {
     const isHighlight = highlightWords.some((w) =>
       new RegExp(`^${escapeRegExp(w)}$`, 'i').test(part)
     );
-
     if (isHighlight) {
       return (
         <span key={i} className={`${accentClass} font-semibold`}>
@@ -139,12 +144,11 @@ function renderHighlightedText(
         </span>
       );
     }
-
     return <span key={i}>{part}</span>;
   });
 }
 
-// --------- slides ---------
+// ========= SLIDES =========
 
 const slides: Slide[] = [
   {
@@ -152,7 +156,7 @@ const slides: Slide[] = [
     title: 'Gente e Cultura T.Group',
     subtitle: 'Análise do cenário atual e plano 2026',
     highlight:
-      'De um exército de uma só pessoa para um sistema sustentável de pessoas para toda a holding.',
+      'De um exército de duas pessoas para um sistema sustentável de pessoas para toda a holding.',
     accent: 'fuchsia',
     highlightWords: ['sistema sustentável', 'holding', 'Gente e Cultura']
   },
@@ -377,7 +381,7 @@ const slides: Slide[] = [
       'Organograma mínimo: Head de GC + Analista de DP/People Ops.',
       'Business case: custo atual de DP terceirizado + tempo de GC x cenário com DP mais internalizado.',
       'Ganhos esperados: menos erros, mais agilidade e mais tempo estratégico do Head.',
-      'Cronograma: Q1 desenho e validação, Q2 contratação, Q3 transição, Q4 revisão do modelo.'
+      'Cronograma: Q4 2025 desenho e validação, Q1 2026 contratação, Q2–Q3 transição, Q4 revisão do modelo.'
     ],
     accent: 'fuchsia',
     highlightWords: ['Analista de DP/People Ops', 'business case', 'cronograma']
@@ -393,7 +397,12 @@ const slides: Slide[] = [
       'Kit de boas-vindas oficial alinhado ao DNA do T.Group.'
     ],
     accent: 'emerald',
-    highlightWords: ['playbook', 'Jornada 0–90 dias', 'Encontro de Boas-Vindas', 'kit de boas-vindas']
+    highlightWords: [
+      'Playbook',
+      'Jornada 0–90 dias',
+      'Encontro de Boas-Vindas',
+      'kit de boas-vindas'
+    ]
   },
   {
     id: 'frente-dp',
@@ -405,7 +414,7 @@ const slides: Slide[] = [
       'Reduzir retrabalho e centralização em mensagens avulsas.'
     ],
     accent: 'sky',
-    highlightWords: ['mapear processos', 'responsabilidades', 'transparente']
+    highlightWords: ['processos', 'responsabilidades', 'transparente']
   },
   {
     id: 'frente-performance',
@@ -518,7 +527,7 @@ const slides: Slide[] = [
   }
 ];
 
-// --------- componente principal ---------
+// ========= COMPONENTE =========
 
 export default function GC2026DeckPage() {
   const [index, setIndex] = useState(0);
@@ -563,11 +572,11 @@ export default function GC2026DeckPage() {
           {sections.map((section) => (
             <div
               key={section.title}
-              className="relative flex flex-col gap-2 rounded-2xl bg-slate-950/40 border border-white/15 px-4 py-4 backdrop-blur-xl"
+              className="relative flex flex-col gap-2 rounded-2xl bg-slate-950/60 border border-white/15 px-4 py-4 backdrop-blur-xl"
             >
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center justify-center">
                 <div
-                  className={`h-3 w-3 rounded-full shadow-[0_0_16px_rgba(248,250,252,0.9)] ${accentCfg.bulletDot}`}
+                  className={`h-3 w-3 rounded-full shadow-[0_0_16px_rgba(248,250,252,0.95)] ${accentCfg.bulletDot}`}
                 />
               </div>
               <h3 className="text-sm sm:text-base font-semibold text-slate-50">
@@ -601,10 +610,11 @@ export default function GC2026DeckPage() {
           >
             <div
               className={`relative ${
-                isPhone ? 'h-48 w-24 sm:h-56 sm:w-28 md:h-64 md:w-32' : 'h-40 w-56 sm:h-48 sm:w-64 md:h-56 md:w-80'
-              } rounded-[32px] border border-white/25 bg-slate-950/60 shadow-[0_0_40px_rgba(15,23,42,0.9)] backdrop-blur-2xl overflow-hidden`}
+                isPhone
+                  ? 'h-48 w-24 sm:h-56 sm:w-28 md:h-64 md:w-32'
+                  : 'h-40 w-56 sm:h-48 sm:w-64 md:h-56 md:w-80'
+              } rounded-[32px] border border-white/25 bg-slate-950/80 shadow-[0_0_40px_rgba(15,23,42,0.9)] backdrop-blur-2xl overflow-hidden`}
             >
-              {/* borda da tela */}
               {isPhone && (
                 <div className="absolute inset-x-6 top-0 h-4 rounded-b-3xl bg-slate-900/80" />
               )}
@@ -625,6 +635,67 @@ export default function GC2026DeckPage() {
     </div>
   );
 
+  const renderOnboardingTimeline = () => {
+    const steps = [
+      {
+        tag: 'Dia 0',
+        title: 'Chegada + Boas-vindas',
+        desc: 'Apresentação, tour pela casa, kit de boas-vindas e alinhamento com a liderança.'
+      },
+      {
+        tag: 'Semana 1',
+        title: 'Imersão no time',
+        desc: 'Rotina acompanhada, acesso às ferramentas e apresentação dos projetos em andamento.'
+      },
+      {
+        tag: 'Dia 30',
+        title: 'Primeiro checkpoint',
+        desc: 'Feedback estruturado, expectativas ajustadas e pequenos ajustes de rota.'
+      },
+      {
+        tag: 'Dia 60',
+        title: 'Consolidação',
+        desc: 'Autonomia maior, conexão com outras áreas e participação em rituais importantes.'
+      },
+      {
+        tag: 'Dia 90',
+        title: 'Validação',
+        desc: 'Fechamento da jornada inicial, alinhamento de PDI e metas para o próximo ciclo.'
+      }
+    ];
+
+    return (
+      <div className="mt-6">
+        <p className="text-sm sm:text-base text-slate-300 mb-4">
+          Jornada pensada para garantir que ninguém “se vire sozinho” nos primeiros meses de T.Group.
+        </p>
+        <div className="relative mt-4">
+          <div className="absolute inset-x-8 top-1/2 hidden h-px bg-slate-600/40 lg:block" />
+          <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {steps.map((step) => (
+              <div
+                key={step.tag}
+                className="relative flex flex-col gap-2 rounded-2xl bg-slate-950/70 border border-white/15 px-4 py-4 backdrop-blur-xl"
+              >
+                <div
+                  className={`inline-flex items-center self-start rounded-full px-3 py-1 text-xs font-semibold text-slate-900 bg-white`}
+                >
+                  {step.tag}
+                </div>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-50">
+                  {step.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-200/90">
+                  {step.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderSlideContent = (slide: Slide) => {
     const variant = slide.variant ?? 'default';
 
@@ -633,7 +704,9 @@ export default function GC2026DeckPage() {
       return (
         <div className="relative flex flex-col gap-4">
           <div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-slate-50">
+            <h1
+              className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+            >
               {slide.title}
             </h1>
             {slide.subtitle && (
@@ -647,13 +720,15 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // DEVICES (texto + mockups)
+    // DEVICES
     if (variant === 'devices' && slide.devices) {
       return (
-        <div className="relative grid gap-8 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] items-center">
+        <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1.1fr)] items-center">
           <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-slate-50">
+              <h1
+                className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+              >
                 {slide.title}
               </h1>
               {slide.subtitle && (
@@ -702,9 +777,55 @@ export default function GC2026DeckPage() {
               </p>
             )}
           </div>
-          <div className="flex justify-center md:justify-end">
+          <div className="flex justify-center lg:justify-end">
             {renderDevices(slide.devices)}
           </div>
+        </div>
+      );
+    }
+
+    // SLIDE ESPECIAL: 0–90 DIAS
+    if (slide.id === 'frente-onboarding') {
+      return (
+        <div className="relative flex flex-col gap-4">
+          <div>
+            <h1
+              className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+            >
+              {slide.title}
+            </h1>
+            {slide.subtitle && (
+              <p className="mt-2 text-base sm:text-lg text-slate-200">
+                {slide.subtitle}
+              </p>
+            )}
+          </div>
+
+          {slide.bullets && (
+            <motion.ul
+              className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
+              variants={listVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {slide.bullets.map((item, i) => (
+                <motion.li
+                  key={i}
+                  variants={itemVariants}
+                  className="flex gap-3"
+                >
+                  <span
+                    className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+                  />
+                  <span>
+                    {renderHighlightedText(item, slide.highlightWords, accent)}
+                  </span>
+                </motion.li>
+              ))}
+            </motion.ul>
+          )}
+
+          {renderOnboardingTimeline()}
         </div>
       );
     }
@@ -713,7 +834,9 @@ export default function GC2026DeckPage() {
     return (
       <div className="relative flex flex-col gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-slate-50">
+          <h1
+            className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+          >
             {slide.title}
           </h1>
           {slide.subtitle && (
@@ -765,8 +888,8 @@ export default function GC2026DeckPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50 flex flex-col items-center justify-center relative overflow-hidden">
-      {/* blobs de fundo */}
+    <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50 flex flex-col relative overflow-hidden">
+      {/* blobs gerais */}
       <motion.div
         className="pointer-events-none absolute inset-0 opacity-40"
         animate={{ opacity: [0.35, 0.5, 0.35] }}
@@ -777,8 +900,8 @@ export default function GC2026DeckPage() {
         <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-emerald-500 blur-3xl" />
       </motion.div>
 
-      {/* header */}
-      <header className="z-10 w-full max-w-7xl flex justify-between items-center px-4 sm:px-8 mb-4">
+      {/* header fixo */}
+      <header className="z-10 w-full max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-8 pt-4 sm:pt-6">
         <div className="flex flex-col gap-1">
           <span className="text-xs uppercase tracking-[0.25em] text-slate-400">
             T.Group • Gente e Cultura
@@ -792,8 +915,13 @@ export default function GC2026DeckPage() {
         </div>
       </header>
 
-      {/* slide card */}
-      <main className="z-10 w-full max-w-7xl px-4 sm:px-8">
+      {/* halo do slide atual */}
+      <div
+        className={`pointer-events-none absolute inset-x-0 top-24 h-72 blur-3xl bg-gradient-to-b ${accentCfg.haloBg}`}
+      />
+
+      {/* conteúdo do slide */}
+      <main className="z-10 flex-1 flex items-center">
         <AnimatePresence custom={direction} mode="wait">
           <motion.section
             key={current.id}
@@ -803,23 +931,20 @@ export default function GC2026DeckPage() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.35, ease: 'easeInOut' }}
-            className="relative rounded-3xl border border-white/15 bg-white/8 bg-clip-padding backdrop-blur-2xl shadow-[0_0_80px_rgba(15,23,42,0.9)] px-6 sm:px-10 py-8 sm:py-10 md:py-12 overflow-hidden"
+            className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-10 md:py-14"
           >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5" />
-            <div className="relative">
-              {renderSlideContent(current)}
-            </div>
+            {renderSlideContent(current)}
           </motion.section>
         </AnimatePresence>
       </main>
 
-      {/* controls + progress */}
-      <footer className="z-10 mt-4 mb-6 w-full max-w-7xl px-4 sm:px-8 flex items-center justify-between gap-4">
+      {/* footer / navegação */}
+      <footer className="z-10 pb-6 w-full max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <button
             onClick={() => goTo(index - 1)}
             disabled={index === 0}
-            className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs sm:text-sm md:text-base text-slate-50 disabled:opacity-40 disabled:cursor-default hover:bg-white/20 transition-colors ${accentCfg.buttonBorder} bg-white/10`}
+            className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs sm:text-sm md:text-base text-slate-50 disabled:opacity-40 disabled:cursor-default hover:bg-white/15 transition-colors ${accentCfg.buttonBorder} bg-white/5`}
           >
             <ArrowLeft className="h-3 w-3 md:h-4 md:w-4" />
             Anterior

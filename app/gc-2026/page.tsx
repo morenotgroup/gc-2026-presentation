@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-type SlideVariant = 'default' | 'roadmap' | 'devices';
+type SlideVariant = 'default' | 'roadmap' | 'devices' | 'cards';
 type SlideAccent = 'fuchsia' | 'sky' | 'emerald' | 'amber';
 
 type RoadmapSection = {
@@ -16,7 +16,7 @@ type RoadmapSection = {
 type DeviceMockup = {
   type: 'phone' | 'laptop';
   label: string;
-  image: string; // caminho em /public, ex: /gc-assets/device-mobile-checkin.png
+  image: string;
 };
 
 type CompanyLogo = {
@@ -42,7 +42,8 @@ type Slide = {
   devices?: DeviceMockup[];
   highlightWords?: string[];
   companyLogos?: CompanyLogo[];
-  pillSections?: PillSection[]; // para slides em formato de cards, tipo Escopo
+  pillSections?: PillSection[]; // usado em “Escopo real”
+  cards?: PillSection[]; // usado nos slides que vamos transformar em cards
 };
 
 const accentConfig: Record<
@@ -180,7 +181,8 @@ const slides: Slide[] = [
       'Essência: criar experiências relevantes para pessoas, marcas e públicos diversos.',
       'Base do negócio: times jovens, criativos e intensos, com entregas que precisam ser sustentáveis.'
     ],
-    footer: 'É nesse cenário que Gente e Cultura se torna pilar estratégico para o grupo.',
+    footer:
+      'É nesse cenário que Gente e Cultura se torna pilar estratégico para o grupo.',
     accent: 'sky',
     highlightWords: ['holding', 'experiências', 'sustentáveis'],
     companyLogos: [
@@ -257,19 +259,42 @@ const slides: Slide[] = [
       }
     ]
   },
+  // 3.1 em CARDS
   {
     id: 'rs',
     title: '3.1. Recrutamento e Seleção',
-    bullets: [
-      'Recebimento do pedido da liderança de qualquer empresa do grupo.',
-      'Desenho e arte da vaga, estrutura de acompanhamento no Drive e publicação em canais.',
-      'Triagem de currículos, contato com candidatos e organização das etapas (entrevistas, testes, cases).',
-      'Aplicação de DISC e entrevistas focadas em alinhamento cultural e perfil profissional.',
-      'Contato com aprovados, retorno para reprovados e fechamento do processo – tudo concentrado em GC.'
-    ],
     accent: 'sky',
-    highlightWords: ['liderança', 'DISC', 'alinhamento cultural']
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Pedido da liderança',
+        description:
+          'Recebimento do pedido da liderança de qualquer empresa do grupo, entendendo urgência, perfil e contexto da vaga.'
+      },
+      {
+        title: 'Desenho e divulgação da vaga',
+        description:
+          'Desenho e arte da vaga, criação da estrutura de acompanhamento no Drive e publicação em canais (LinkedIn, redes e rede de contatos).'
+      },
+      {
+        title: 'Triagem e organização do funil',
+        description:
+          'Triagem de currículos, contato com candidatos e organização das etapas: entrevistas, testes técnicos e cases quando necessário.'
+      },
+      {
+        title: 'DISC + alinhamento cultural',
+        description:
+          'Aplicação de DISC e entrevistas guiadas por alinhamento cultural, fit com o time e avaliação do histórico profissional.'
+      },
+      {
+        title: 'Fechamento e feedbacks',
+        description:
+          'Contato com aprovados, retorno estruturado para reprovados e fechamento completo do processo – tudo concentrado em GC.'
+      }
+    ],
+    highlightWords: ['DISC', 'alinhamento cultural']
   },
+  // 3.2 segue em bullets (já está bem diferente por causa do subtítulo “Onboarding ainda fragmentado”)
   {
     id: 'admissao',
     title: '3.2. Admissão e integração',
@@ -284,70 +309,182 @@ const slides: Slide[] = [
     accent: 'amber',
     highlightWords: ['onboarding', 'benefícios', 'ritual mensal', 'kit oficial']
   },
+  // 3.3 em CARDS
   {
     id: 'desligamentos',
     title: '3.3. Desligamentos',
-    bullets: [
-      'Condução da conversa de desligamento (preferencialmente presencial).',
-      'Contato com contabilidade para extrato de rescisão (PJ e CLT) e assinatura de termos.',
-      'Atualização de planilhas de colaboradores, comunicação de pagamentos ao financeiro e cancelamento de acessos.',
-      'Ainda não há entrevistas de desligamento estruturadas com registros e indicadores consistentes.'
-    ],
     accent: 'fuchsia',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Conversa de desligamento',
+        description:
+          'Condução da conversa de desligamento, preferencialmente presencial, com cuidado na comunicação e respeito à história da pessoa.'
+      },
+      {
+        title: 'Documentação e cálculos',
+        description:
+          'Contato com a contabilidade para emissão do extrato de rescisão (PJ e CLT), além da conferência de valores e direitos.'
+      },
+      {
+        title: 'Atualização de cadastros',
+        description:
+          'Atualização de planilhas de colaboradores, registros internos e controles de folha para garantir que nada fique para trás.'
+      },
+      {
+        title: 'Pagamentos e acessos',
+        description:
+          'Comunicação ao financeiro sobre pagamentos pendentes, coordenação de prazos e cancelamento de acessos e e-mails corporativos.'
+      },
+      {
+        title: 'Aprendizado perdido',
+        description:
+          'Ainda não há entrevistas de desligamento estruturadas com registros e indicadores consistentes – o aprendizado da saída se perde.'
+      }
+    ],
     highlightWords: ['desligamento', 'rescisão', 'entrevistas de desligamento']
   },
+  // 3.4 em CARDS
   {
     id: 'dp',
     title: '3.4. DP, folha e rotinas burocráticas',
-    bullets: [
-      'Folha CLT terceirizada (NOU), mas grande parte de People Ops concentrada em GC.',
-      'NF-Express criado internamente para upload de notas fiscais.',
-      'Envio de comunicados, atualização de planilhas, cobrança de NFs em atraso e suporte a novos colaboradores.',
-      'Relatórios de TotalPass e Google Workspace, controle de gastos e reembolsos.',
-      'Na prática, uma estrutura de DP/People Ops operada por uma pessoa, com apoio do sócio Vinicius David.'
-    ],
     accent: 'emerald',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Folha CLT via NOU',
+        description:
+          'Folha CLT terceirizada com a NOU, responsável pelos cálculos legais, obrigações acessórias e segurança jurídica básica.'
+      },
+      {
+        title: 'NF-Express e notas fiscais',
+        description:
+          'NF-Express criado internamente por GC para upload de notas fiscais, centralizando dados e reduzindo erros de digitação.'
+      },
+      {
+        title: 'Rotina mensal com financeiro',
+        description:
+          'Envio de comunicados, atualização de planilhas, cobrança de NFs em atraso, alinhamentos com financeiro e suporte individual a novos colaboradores.'
+      },
+      {
+        title: 'Relatórios e controles',
+        description:
+          'Relatórios de TotalPass e Google Workspace, além do controle de gastos, reembolsos e indicadores que alimentam os sócios.'
+      },
+      {
+        title: 'People Ops concentrado',
+        description:
+          'Na prática, uma estrutura de DP/People Ops operada por uma pessoa, com apoio do sócio Vinicius David – o que aumenta riscos e limita a escalabilidade.'
+      }
+    ],
     highlightWords: ['NOU', 'NF-Express', 'People Ops', 'TotalPass']
   },
+  // 3.5 em CARDS
   {
     id: 'consultivo',
     title: '3.5. Atendimento às empresas e papel consultivo',
-    bullets: [
-      'Orientação de líderes em temas de gestão de pessoas, conflitos e feedback.',
-      'Análises de clima, escutas individuais e intervenções pontuais.',
-      'Apoio na construção de planos de desenvolvimento de lideranças.',
-      'Redesenho de funções e fluxos, como no caso de Facilities.',
-      'GC atua como parceiro de negócio das empresas da holding.'
-    ],
     accent: 'sky',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Apoio às lideranças',
+        description:
+          'Orientação de líderes em temas de gestão de pessoas, feedback, conflitos, reorganização de times e decisões sensíveis.'
+      },
+      {
+        title: 'Escuta e clima',
+        description:
+          'Análises de clima, escutas individuais, conversas difíceis e intervenções pontuais para evitar que problemas cresçam.'
+      },
+      {
+        title: 'Desenvolvimento de lideranças',
+        description:
+          'Apoio na construção de planos de desenvolvimento de lideranças, com conteúdos, reflexões e exercícios práticos.'
+      },
+      {
+        title: 'Redesenho de áreas',
+        description:
+          'Redesenho de funções e fluxos, como no caso de Facilities, unindo visão de negócio, experiência do colaborador e operação.'
+      },
+      {
+        title: 'Parceiro de negócio',
+        description:
+          'GC atua como parceiro de negócio das empresas da holding, ajudando a tomar decisões melhores sobre gente considerando contexto e estratégia.'
+      }
+    ],
     highlightWords: ['clima', 'feedback', 'parceiro de negócio']
   },
+  // 3.6 em CARDS
   {
     id: 'cultura-rituais',
     title: '3.6. Cultura, rituais e experiência',
-    bullets: [
-      'Esportes T.Group (society e vôlei de areia) – organização de ponta a ponta.',
-      'Café com T – contato com sócios, apresentação, café, comunicação e condução.',
-      'Aniversariantes, Happy Hour, massagista e manicure como rituais de cuidado.',
-      'Confraternização geral anual e apoio a confraternizações por empresa.',
-      'Rituais essenciais de engajamento hoje operados de forma 100% manual por GC.'
-    ],
     accent: 'amber',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Esportes T.Group',
+        description:
+          'Organização mensal de society e vôlei de areia: orçamentos, reservas de quadra, comunicação, logística e pós-evento.'
+      },
+      {
+        title: 'Café com T',
+        description:
+          'Contato com sócios, construção da apresentação, contratação do café, montagem do espaço, comunicação geral e condução do encontro.'
+      },
+      {
+        title: 'Rituais de cuidado',
+        description:
+          'Aniversariantes, Happy Hour, massagista e manicure como rituais recorrentes de cuidado e conexão entre as pessoas.'
+      },
+      {
+        title: 'Confraternizações',
+        description:
+          'Confraternização geral anual e apoio a confraternizações específicas por empresa (como WAS, T.Youth, etc.).'
+      },
+      {
+        title: 'Operação 100% manual',
+        description:
+          'Rituais essenciais de engajamento hoje são operados de forma 100% manual por GC, com pouco suporte operacional dedicado.'
+      }
+    ],
     highlightWords: ['Esportes T.Group', 'Café com T', 'engajamento']
   },
+  // 3.7 em CARDS
   {
     id: 'facilities',
     title: '3.7. Facilities e gestão da casa',
-    bullets: [
-      'Mentoria para liderança de Facilities e apoio às rotinas de limpeza, organização e cozinha.',
-      'Participação em decisões sobre reformas, melhorias e prioridades da sede.',
-      'Responsabilidade pela relação com vizinhos e gestão de ruídos com clientes.',
-      'Negociação e renovação de contratos com imobiliária, seguros e frentes ligadas à casa.',
-      'GC se torna guardião da experiência física da sede, ampliando fortemente o escopo da área.'
-    ],
     accent: 'emerald',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Mentoria de Facilities',
+        description:
+          'Mentoria direta para a liderança de Facilities e apoio ao time nas rotinas de limpeza, organização, cozinha e atendimento interno.'
+      },
+      {
+        title: 'Prioridades da sede',
+        description:
+          'Participação ativa em decisões sobre reformas, melhorias, compras estruturais e prioridades de investimento na casa.'
+      },
+      {
+        title: 'Relação com vizinhança',
+        description:
+          'Responsabilidade pela relação com vizinhos e gestão de ruídos envolvendo eventos, clientes e entregas.'
+      },
+      {
+        title: 'Contratos e seguros',
+        description:
+          'Negociação e renovação de contratos com imobiliária, seguros e frentes ligadas ao imóvel da sede.'
+      },
+      {
+        title: 'Experiência física da casa',
+        description:
+          'GC se torna guardião da experiência física da sede, alinhando a casa ao mesmo nível de cuidado da experiência digital e de eventos.'
+      }
+    ],
     highlightWords: ['Facilities', 'guardião', 'experiência física']
   },
+  // 3.8 segue como DEVICES (já estava diferente)
   {
     id: 'ti-gente',
     title: '3.8. TI de gente e automações',
@@ -374,43 +511,107 @@ const slides: Slide[] = [
       }
     ]
   },
+  // 3.9 em CARDS
   {
     id: 'beneficios',
     title: '3.9. Benefícios e proposta de valor',
-    bullets: [
-      'Benefícios atuais: TotalPass, Petin, Capacitar/Udemy, convênios educacionais.',
-      'Estudo de benefícios flexíveis (iFood Benefícios, Caju) e de plano de saúde (Tailor).',
-      'Avaliação de plataforma de performance e gestão de pessoas (Qulture.Rocks).',
-      'O desafio é transformar tudo isso em uma proposta de valor clara, percebida e comunicada.'
-    ],
     accent: 'amber',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Pacote atual',
+        description:
+          'Benefícios hoje: TotalPass, Petin, Capacitar/Udemy e convênios educacionais que apoiam bem-estar físico, emocional e desenvolvimento.'
+      },
+      {
+        title: 'Benefícios flexíveis',
+        description:
+          'Estudo de benefícios flexíveis como iFood Benefícios e Caju, permitindo personalização de acordo com o momento de vida de cada pessoa.'
+      },
+      {
+        title: 'Saúde e performance',
+        description:
+          'Avaliação de plano de saúde/odontológico via Tailor e de plataforma de performance e gestão de pessoas (como Qulture.Rocks).'
+      },
+      {
+        title: 'História coerente',
+        description:
+          'O desafio é organizar tudo isso em uma narrativa clara de proposta de valor ao colaborador: o que o T.Group entrega, por quê e para quem.'
+      }
+    ],
     highlightWords: ['benefícios flexíveis', 'plano de saúde', 'proposta de valor']
   },
   {
     id: 'riscos-resumo',
     title: '4. Riscos do modelo atual',
-    bullets: [
-      'GC é estratégico e reconhecido, mas operado de forma artesanal.',
-      'Dependência extrema de uma pessoa para operações críticas e conhecimento histórico.',
-      'Sobrecarga aumenta risco de burnout, erros operacionais e eventuais passivos trabalhistas.',
-      'Experiência do colaborador varia entre empresas e momentos.',
-      'GC pode virar gargalo do crescimento da holding se nada mudar.'
-    ],
     accent: 'fuchsia',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Operação artesanal',
+        description:
+          'GC é estratégico e reconhecido, mas muitas rotinas ainda são operadas de forma artesanal, com pouca padronização e dependência de memória.'
+      },
+      {
+        title: 'Dependência de uma pessoa',
+        description:
+          'Concentração de conhecimento histórico, processos e ferramentas em uma única pessoa, aumentando o risco de descontinuidade.'
+      },
+      {
+        title: 'Sobrecarga e burnout',
+        description:
+          'Sobrecarga diária aumenta risco de burnout, erros operacionais e, em casos extremos, eventuais passivos trabalhistas.'
+      },
+      {
+        title: 'Experiências diferentes',
+        description:
+          'Experiência do colaborador varia entre empresas e momentos, sem um padrão claro de jornada T.Group.'
+      },
+      {
+        title: 'Gargalo de crescimento',
+        description:
+          'Sem ajustes, GC pode virar gargalo do crescimento da holding, atrasando decisões e travando iniciativas-chave.'
+      }
+    ],
     highlightWords: ['artesanal', 'burnout', 'gargalo']
   },
   {
     id: 'principios',
     title: '5. Princípios norteadores 2026',
-    bullets: [
-      'GC como área estratégica, não apenas operacional.',
-      'Divisão clara entre estratégia (Head) e operação (DP/People Ops).',
-      'Experiência do colaborador unificada em toda a holding.',
-      'Decisões orientadas por dados de gente (turnover, engajamento, performance, benefícios).',
-      'Ferramentas jovens, digitais e acessíveis, alinhadas ao perfil do T.Group.',
-      'Cuidado também com quem cuida – sustentabilidade do próprio time de GC.'
-    ],
     accent: 'emerald',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'GC estratégico',
+        description:
+          'Gente e Cultura como área estratégica, não apenas operacional – influenciando decisões de negócio com visão de pessoas.'
+      },
+      {
+        title: 'Estratégia x operação',
+        description:
+          'Divisão clara entre a atuação estratégica do Head e a execução diária com apoio de DP/People Ops.'
+      },
+      {
+        title: 'Jornada unificada',
+        description:
+          'Experiência do colaborador coerente em toda a holding, independente da empresa de origem.'
+      },
+      {
+        title: 'Decisões orientadas por dados',
+        description:
+          'Uso de dados de gente (turnover, engajamento, performance, benefícios) para priorizar ações e investimentos.'
+      },
+      {
+        title: 'Ferramentas jovens e digitais',
+        description:
+          'Ferramentas simples, digitais e acessíveis, alinhadas ao perfil jovem e criativo do T.Group.'
+      },
+      {
+        title: 'Cuidar de quem cuida',
+        description:
+          'Cuidado com a sustentabilidade do próprio time de GC, evitando sobrecarga e garantindo continuidade do trabalho.'
+      }
+    ],
     highlightWords: ['estratégica', 'dados de gente', 'sustentabilidade']
   },
   {
@@ -641,6 +842,34 @@ const renderOnboardingTimeline = () => {
   );
 };
 
+const renderCardsGrid = (items: PillSection[], accent: SlideAccent) => {
+  const accentCfg = accentConfig[accent];
+  return (
+    <div className="mt-6">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((pill) => (
+          <div
+            key={pill.title}
+            className="rounded-2xl bg-slate-950/70 border border-white/15 px-4 py-4 backdrop-blur-xl flex flex-col gap-2"
+          >
+            <div className="inline-flex items-center gap-2">
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+              />
+              <h3 className="text-sm sm:text-base font-semibold text-slate-50">
+                {pill.title}
+              </h3>
+            </div>
+            <p className="text-xs sm:text-sm md:text-base text-slate-200/90">
+              {pill.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // ========= COMPONENTE PRINCIPAL =========
 
 export default function GC2026DeckPage() {
@@ -768,36 +997,6 @@ export default function GC2026DeckPage() {
     </div>
   );
 
-  const renderEscopoPills = (slide: Slide, accent: SlideAccent) => {
-    if (!slide.pillSections) return null;
-    const accentCfg = accentConfig[accent];
-
-    return (
-      <div className="mt-6">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {slide.pillSections.map((pill) => (
-            <div
-              key={pill.title}
-              className="rounded-2xl bg-slate-950/70 border border-white/15 px-4 py-4 backdrop-blur-xl flex flex-col gap-2"
-            >
-              <div className="inline-flex items-center gap-2">
-                <span
-                  className={`h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
-                />
-                <h3 className="text-sm sm:text-base font-semibold text-slate-50">
-                  {pill.title}
-                </h3>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-200/90">
-                {pill.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
   const renderSlideContent = (slide: Slide) => {
     const variant = slide.variant ?? 'default';
 
@@ -867,7 +1066,11 @@ export default function GC2026DeckPage() {
                       className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
                     />
                     <span>
-                      {renderHighlightedText(item, slide.highlightWords, accent)}
+                      {renderHighlightedText(
+                        item,
+                        slide.highlightWords,
+                        accent
+                      )}
                     </span>
                   </motion.li>
                 ))}
@@ -886,8 +1089,8 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // SLIDE ESPECIAL: ESCOPOS EM PÍLLS
-    if (slide.id === 'escopo-geral') {
+    // CARDS (para vários slides 3.x, 4 e 5)
+    if (variant === 'cards' && slide.cards) {
       return (
         <div className="relative flex flex-col gap-4">
           <div>
@@ -902,12 +1105,52 @@ export default function GC2026DeckPage() {
               </p>
             )}
           </div>
-          {renderEscopoPills(slide, accent)}
+
+          {slide.highlight && (
+            <p
+              className={`mt-2 text-base sm:text-lg text-slate-100/90 border-l-2 pl-3 ${accentCfg.highlightBorder}`}
+            >
+              {renderHighlightedText(
+                slide.highlight,
+                slide.highlightWords,
+                accent
+              )}
+            </p>
+          )}
+
+          {renderCardsGrid(slide.cards, accent)}
+
+          {slide.footer && (
+            <p className="mt-4 text-xs sm:text-sm text-slate-400">
+              {slide.footer}
+            </p>
+          )}
         </div>
       );
     }
 
-    // SLIDE ESPECIAL: ONBOARDING 0–90 DIAS
+    // SLIDE com pillSections (Escopo real)
+    if (slide.pillSections && slide.id === 'escopo-geral') {
+      return (
+        <div className="relative flex flex-col gap-4">
+          <div>
+            <h1
+              className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+            >
+              {slide.title}
+            </h1>
+            {slide.subtitle && (
+              <p className="mt-2 text-base sm:text-lg text-slate-200">
+                {slide.subtitle}
+              </p>
+            )}
+          </div>
+          {renderCardsGrid(slide.pillSections, accent)}
+        </div>
+      );
+    }
+
+    // SLIDE específico: onboarding 0–90
     if (slide.id === 'frente-onboarding') {
       return (
         <div className="relative flex flex-col gap-4">
@@ -941,7 +1184,11 @@ export default function GC2026DeckPage() {
                     className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
                   />
                   <span>
-                    {renderHighlightedText(item, slide.highlightWords, accent)}
+                    {renderHighlightedText(
+                      item,
+                      slide.highlightWords,
+                      accent
+                    )}
                   </span>
                 </motion.li>
               ))}
@@ -994,7 +1241,11 @@ export default function GC2026DeckPage() {
                   className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
                 />
                 <span>
-                  {renderHighlightedText(item, slide.highlightWords, accent)}
+                  {renderHighlightedText(
+                    item,
+                    slide.highlightWords,
+                    accent
+                  )}
                 </span>
               </motion.li>
             ))}

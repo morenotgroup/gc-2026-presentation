@@ -58,7 +58,7 @@ a {
   color: #f9fafb; /* near-slate-50 */
 }
 
-/* Opcional: classe para um container central padrão (se quiser usar em outras páginas) */
+/* Container genérico opcional */
 .container-main {
   @apply max-w-6xl mx-auto px-4 sm:px-8;
 }

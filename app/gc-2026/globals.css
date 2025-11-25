@@ -1,0 +1,64 @@
+/* app/globals.css */
+
+/* Tailwind layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset básico + suavização */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* Fonte e fundo padrão (o resto a gente controla com classes no React) */
+body {
+  @apply bg-slate-950 text-slate-50 antialiased;
+}
+
+/* Deixa o scroll mais suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar mais discreta (Chrome/Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.9); /* slate-900-ish */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.7); /* slate-400-ish */
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(248, 250, 252, 0.8); /* slate-50-ish */
+}
+
+/* Links padrão */
+a {
+  @apply text-fuchsia-300 hover:text-fuchsia-200 underline-offset-2 hover:underline;
+}
+
+/* Seleção de texto combinando com o visual da apresentação */
+::selection {
+  background: rgba(244, 114, 182, 0.35); /* fuchsia-400 */
+  color: #f9fafb; /* near-slate-50 */
+}
+
+/* Opcional: classe para um container central padrão (se quiser usar em outras páginas) */
+.container-main {
+  @apply max-w-6xl mx-auto px-4 sm:px-8;
+}

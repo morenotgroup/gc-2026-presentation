@@ -19,6 +19,16 @@ type DeviceMockup = {
   image: string; // caminho em /public, ex: /gc-assets/device-mobile-checkin.png
 };
 
+type CompanyLogo = {
+  name: string;
+  src: string;
+};
+
+type PillSection = {
+  title: string;
+  description: string;
+};
+
 type Slide = {
   id: string;
   title: string;
@@ -31,6 +41,8 @@ type Slide = {
   roadmap?: RoadmapSection[];
   devices?: DeviceMockup[];
   highlightWords?: string[];
+  companyLogos?: CompanyLogo[];
+  pillSections?: PillSection[]; // para slides em formato de cards, tipo Escopo
 };
 
 const accentConfig: Record<
@@ -156,7 +168,7 @@ const slides: Slide[] = [
     title: 'Gente e Cultura T.Group',
     subtitle: 'Análise do cenário atual e plano 2026',
     highlight:
-      'De um exército de duas pessoas para um sistema sustentável de pessoas para toda a holding.',
+      'De um exército de uma só pessoa para um sistema sustentável de pessoas para toda a holding.',
     accent: 'fuchsia',
     highlightWords: ['sistema sustentável', 'holding', 'Gente e Cultura']
   },
@@ -165,13 +177,19 @@ const slides: Slide[] = [
     title: '1. Apresentação e contexto',
     bullets: [
       'O T.Group é uma holding de entretenimento com vocações complementares.',
-      'Empresas: T.Youth, T.Brands, T.Dreams, T.Venues e WAS.',
       'Essência: criar experiências relevantes para pessoas, marcas e públicos diversos.',
       'Base do negócio: times jovens, criativos e intensos, com entregas que precisam ser sustentáveis.'
     ],
     footer: 'É nesse cenário que Gente e Cultura se torna pilar estratégico para o grupo.',
     accent: 'sky',
-    highlightWords: ['holding', 'experiências', 'sustentáveis']
+    highlightWords: ['holding', 'experiências', 'sustentáveis'],
+    companyLogos: [
+      { name: 'T.Youth', src: '/gc-assets/logo-tyouth.png' },
+      { name: 'T.Brands', src: '/gc-assets/logo-tbrands.png' },
+      { name: 'T.Dreams', src: '/gc-assets/logo-tdreams.png' },
+      { name: 'T.Venues', src: '/gc-assets/logo-tvenues.png' },
+      { name: 'WAS', src: '/gc-assets/logo-was.png' }
+    ]
   },
   {
     id: 'gc-hoje',
@@ -181,28 +199,63 @@ const slides: Slide[] = [
       'Atende todas as empresas da holding como hub consultivo.',
       'Responsável por recrutamento, admissões, desligamentos, benefícios e interface com financeiro/contabilidade.',
       'Guardião da cultura, dos rituais internos e da “cara interna” do T.Group.',
-      'Sponsor de Facilities e da gestão da sede, além de criar ferramentas digitais internas.'
+      'Sponsor de Facilities, gestão da sede e criação de soluções digitais internas.'
     ],
     accent: 'emerald',
-    highlightWords: ['hub consultivo', 'cultura', 'ferramentas digitais']
+    highlightWords: ['hub consultivo', 'cultura', 'soluções digitais']
   },
   {
     id: 'escopo-geral',
     title: '3. Escopo real de Gente e Cultura',
-    subtitle: 'Visão geral',
-    bullets: [
-      'Recrutamento e Seleção de ponta a ponta.',
-      'Admissão e integração (onboarding ainda fragmentado).',
-      'Desligamentos e offboarding.',
-      'DP, folha PJ, NF-Express e rotinas burocráticas.',
-      'Atendimento consultivo às empresas e lideranças.',
-      'Cultura, rituais e experiência do colaborador.',
-      'Facilities, gestão da casa e relação com vizinhança.',
-      'Google Workspace, domínios e “TI de gente”.',
-      'Benefícios e proposta de valor ao colaborador.'
-    ],
+    subtitle: 'Visão geral em 9 frentes',
     accent: 'fuchsia',
-    highlightWords: ['Recrutamento', 'onboarding', 'DP', 'Benefícios']
+    pillSections: [
+      {
+        title: 'Recrutamento & Seleção',
+        description:
+          'Do pedido da liderança à aprovação: vagas, triagem, entrevistas, testes e feedbacks.'
+      },
+      {
+        title: 'Onboarding & Integração',
+        description:
+          'Admissão, documentação, benefícios, boas-vindas e primeiras conexões com o time e a casa.'
+      },
+      {
+        title: 'Desligamentos & Offboarding',
+        description:
+          'Condução de conversas, documentação, acertos e encerramento respeitoso da jornada.'
+      },
+      {
+        title: 'DP & Rotinas PJ',
+        description:
+          'Folha CLT (via NOU), NF-Express, checagens, relatórios e relação com financeiro/contabilidade.'
+      },
+      {
+        title: 'Atendimento às empresas',
+        description:
+          'Parceiro de negócio das empresas para temas de gestão de pessoas, conflitos e desenvolvimento.'
+      },
+      {
+        title: 'Cultura & Experiência',
+        description:
+          'Rituais mensais (Café com T, Happy Hour, Esportes, etc.) e cuidado com a experiência do colaborador.'
+      },
+      {
+        title: 'Facilities & Casa',
+        description:
+          'Mentoria, priorização de melhorias, relação com vizinhos, contratos e manutenção da sede.'
+      },
+      {
+        title: 'TI de Gente',
+        description:
+          'Gestão de Google Workspace, domínios e criação de ferramentas internas (Check-in, HR Ops, dashboards).'
+      },
+      {
+        title: 'Benefícios & Valor',
+        description:
+          'Curadoria e comunicação de benefícios que reforçam a proposta de valor do T.Group.'
+      }
+    ]
   },
   {
     id: 'rs',
@@ -339,7 +392,7 @@ const slides: Slide[] = [
     bullets: [
       'GC é estratégico e reconhecido, mas operado de forma artesanal.',
       'Dependência extrema de uma pessoa para operações críticas e conhecimento histórico.',
-      'Sobrecarga aumenta risco de burnout, erros operacionais e passivos trabalhistas.',
+      'Sobrecarga aumenta risco de burnout, erros operacionais e eventuais passivos trabalhistas.',
       'Experiência do colaborador varia entre empresas e momentos.',
       'GC pode virar gargalo do crescimento da holding se nada mudar.'
     ],
@@ -527,7 +580,68 @@ const slides: Slide[] = [
   }
 ];
 
-// ========= COMPONENTE =========
+// ========= HELPERS VISUAIS =========
+
+const renderOnboardingTimeline = () => {
+  const steps = [
+    {
+      tag: 'Dia 0',
+      title: 'Chegada + Boas-vindas',
+      desc: 'Apresentação, tour pela casa, kit de boas-vindas e alinhamento com a liderança.'
+    },
+    {
+      tag: 'Semana 1',
+      title: 'Imersão no time',
+      desc: 'Rotina acompanhada, acesso às ferramentas e apresentação dos projetos em andamento.'
+    },
+    {
+      tag: 'Dia 30',
+      title: 'Primeiro checkpoint',
+      desc: 'Feedback estruturado, expectativas ajustadas e pequenos ajustes de rota.'
+    },
+    {
+      tag: 'Dia 60',
+      title: 'Consolidação',
+      desc: 'Autonomia maior, conexão com outras áreas e participação em rituais importantes.'
+    },
+    {
+      tag: 'Dia 90',
+      title: 'Validação',
+      desc: 'Fechamento da jornada inicial, alinhamento de PDI e metas para o próximo ciclo.'
+    }
+  ];
+
+  return (
+    <div className="mt-6">
+      <p className="text-sm sm:text-base text-slate-300 mb-4">
+        Jornada pensada para garantir que ninguém “se vire sozinho” nos primeiros meses de T.Group.
+      </p>
+      <div className="relative mt-4">
+        <div className="absolute inset-x-8 top-1/2 hidden h-px bg-slate-600/40 lg:block" />
+        <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {steps.map((step) => (
+            <div
+              key={step.tag}
+              className="relative flex flex-col gap-2 rounded-2xl bg-slate-950/70 border border-white/15 px-4 py-4 backdrop-blur-xl"
+            >
+              <div className="inline-flex items-center self-start rounded-full px-3 py-1 text-xs font-semibold text-slate-900 bg-white">
+                {step.tag}
+              </div>
+              <h3 className="text-sm sm:text-base font-semibold text-slate-50">
+                {step.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-200/90">
+                {step.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ========= COMPONENTE PRINCIPAL =========
 
 export default function GC2026DeckPage() {
   const [index, setIndex] = useState(0);
@@ -635,62 +749,50 @@ export default function GC2026DeckPage() {
     </div>
   );
 
-  const renderOnboardingTimeline = () => {
-    const steps = [
-      {
-        tag: 'Dia 0',
-        title: 'Chegada + Boas-vindas',
-        desc: 'Apresentação, tour pela casa, kit de boas-vindas e alinhamento com a liderança.'
-      },
-      {
-        tag: 'Semana 1',
-        title: 'Imersão no time',
-        desc: 'Rotina acompanhada, acesso às ferramentas e apresentação dos projetos em andamento.'
-      },
-      {
-        tag: 'Dia 30',
-        title: 'Primeiro checkpoint',
-        desc: 'Feedback estruturado, expectativas ajustadas e pequenos ajustes de rota.'
-      },
-      {
-        tag: 'Dia 60',
-        title: 'Consolidação',
-        desc: 'Autonomia maior, conexão com outras áreas e participação em rituais importantes.'
-      },
-      {
-        tag: 'Dia 90',
-        title: 'Validação',
-        desc: 'Fechamento da jornada inicial, alinhamento de PDI e metas para o próximo ciclo.'
-      }
-    ];
+  const renderCompanyLogos = (logos: CompanyLogo[]) => (
+    <div className="mt-6 flex flex-wrap items-center gap-4">
+      {logos.map((logo) => (
+        <div
+          key={logo.name}
+          className="flex items-center justify-center rounded-2xl bg-slate-950/60 border border-white/10 px-4 py-2 backdrop-blur-xl"
+        >
+          <Image
+            src={logo.src}
+            alt={logo.name}
+            width={80}
+            height={32}
+            className="h-8 w-auto object-contain"
+          />
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderEscopoPills = (slide: Slide, accent: SlideAccent) => {
+    if (!slide.pillSections) return null;
+    const accentCfg = accentConfig[accent];
 
     return (
       <div className="mt-6">
-        <p className="text-sm sm:text-base text-slate-300 mb-4">
-          Jornada pensada para garantir que ninguém “se vire sozinho” nos primeiros meses de T.Group.
-        </p>
-        <div className="relative mt-4">
-          <div className="absolute inset-x-8 top-1/2 hidden h-px bg-slate-600/40 lg:block" />
-          <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {steps.map((step) => (
-              <div
-                key={step.tag}
-                className="relative flex flex-col gap-2 rounded-2xl bg-slate-950/70 border border-white/15 px-4 py-4 backdrop-blur-xl"
-              >
-                <div
-                  className={`inline-flex items-center self-start rounded-full px-3 py-1 text-xs font-semibold text-slate-900 bg-white`}
-                >
-                  {step.tag}
-                </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {slide.pillSections.map((pill) => (
+            <div
+              key={pill.title}
+              className="rounded-2xl bg-slate-950/70 border border-white/15 px-4 py-4 backdrop-blur-xl flex flex-col gap-2"
+            >
+              <div className="inline-flex items-center gap-2">
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+                />
                 <h3 className="text-sm sm:text-base font-semibold text-slate-50">
-                  {step.title}
+                  {pill.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-200/90">
-                  {step.desc}
-                </p>
               </div>
-            ))}
-          </div>
+              <p className="text-xs sm:text-sm text-slate-200/90">
+                {pill.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -784,7 +886,28 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // SLIDE ESPECIAL: 0–90 DIAS
+    // SLIDE ESPECIAL: ESCOPOS EM PÍLLS
+    if (slide.id === 'escopo-geral') {
+      return (
+        <div className="relative flex flex-col gap-4">
+          <div>
+            <h1
+              className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+            >
+              {slide.title}
+            </h1>
+            {slide.subtitle && (
+              <p className="mt-2 text-base sm:text-lg text-slate-200">
+                {slide.subtitle}
+              </p>
+            )}
+          </div>
+          {renderEscopoPills(slide, accent)}
+        </div>
+      );
+    }
+
+    // SLIDE ESPECIAL: ONBOARDING 0–90 DIAS
     if (slide.id === 'frente-onboarding') {
       return (
         <div className="relative flex flex-col gap-4">
@@ -878,6 +1001,8 @@ export default function GC2026DeckPage() {
           </motion.ul>
         )}
 
+        {slide.companyLogos && renderCompanyLogos(slide.companyLogos)}
+
         {slide.footer && (
           <p className="mt-4 text-xs sm:text-sm text-slate-400">
             {slide.footer}
@@ -900,15 +1025,26 @@ export default function GC2026DeckPage() {
         <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-emerald-500 blur-3xl" />
       </motion.div>
 
-      {/* header fixo */}
+      {/* header fixo com logo */}
       <header className="z-10 w-full max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-8 pt-4 sm:pt-6">
-        <div className="flex flex-col gap-1">
-          <span className="text-xs uppercase tracking-[0.25em] text-slate-400">
-            T.Group • Gente e Cultura
-          </span>
-          <span className="text-sm sm:text-base text-slate-300">
-            Plano 2026 • Slide {index + 1} de {total}
-          </span>
+        <div className="flex items-center gap-3">
+          <div className="relative h-8 w-24 sm:w-28">
+            <Image
+              src="/gc-assets/tgroup-logo.png"
+              alt="T.Group"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="text-xs uppercase tracking-[0.25em] text-slate-400">
+              Gente e Cultura
+            </span>
+            <span className="text-sm sm:text-base text-slate-300">
+              Plano 2026 • Slide {index + 1} de {total}
+            </span>
+          </div>
         </div>
         <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400">
           <span>Setas ← → ou espaço para navegar</span>

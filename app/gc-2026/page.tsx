@@ -485,27 +485,50 @@ const slides: Slide[] = [
   },
   // 3.8 (parte 1) – DEVICES
   {
+      {
     id: 'ti-gente',
     title: '3.8. TI de gente e automações',
-    subtitle: 'Check-in, NF-Express, HR Ops e mais',
+    subtitle: 'Dashboard financeiro, HR Ops e fluxos do dia a dia',
     bullets: [
       'Criação e cancelamento de e-mails, gestão de permissões e Drives no Google Workspace.',
       'Configuração de domínios em Locaweb e GoDaddy (DNS, SPF, DKIM).',
+      'Criação de soluções internas: Check-in de almoço, NF-Express, HR Ops, T.Facilities Hub/Rotas e dashboards em Looker Studio.',
       'Nível de automação raro para agências do porte do T.Group, concentrado em uma única pessoa.'
     ],
     accent: 'fuchsia',
     variant: 'devices',
-    highlightWords: ['Google Workspace', 'domínios', 'automação'],
+    highlightWords: [
+      'Check-in de almoço',
+      'NF-Express',
+      'HR Ops',
+      'T.Facilities Hub',
+      'dashboards'
+    ],
     devices: [
       {
         type: 'phone',
         label: 'Check-in do almoço • mobile',
-        image: '/gc-assets/device-mobile-checkin.png'
+        image: '/gc-assets/mock-checkin-almoco.png'
+      },
+      {
+        type: 'phone',
+        label: 'T.Facilities Hub • mobile',
+        image: '/gc-assets/mock-tfacilities-hub.png'
       },
       {
         type: 'laptop',
-        label: 'NF-Express & HR Ops • desktop',
-        image: '/gc-assets/device-laptop-nfexpress.png'
+        label: 'Dashboard financeiro • desktop',
+        image: '/gc-assets/mock-dashboard-financeiro.png'
+      },
+      {
+        type: 'laptop',
+        label: 'HR Ops • desktop',
+        image: '/gc-assets/mock-hr-ops.png'
+      },
+      {
+        type: 'laptop',
+        label: 'NF-Express • desktop',
+        image: '/gc-assets/mock-nf-express.png'
       }
     ]
   },
@@ -1235,8 +1258,8 @@ export default function GC2026DeckPage() {
     </div>
   );
 
-  const renderDevices = (devices: DeviceMockup[]) => (
-    <div className="flex justify-center gap-4 sm:gap-6">
+    const renderDevices = (devices: DeviceMockup[]) => (
+    <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
       {devices.map((device) => {
         const isPhone = device.type === 'phone';
         return (

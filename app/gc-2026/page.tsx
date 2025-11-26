@@ -259,7 +259,6 @@ const slides: Slide[] = [
       }
     ]
   },
-  // 3.1 em CARDS
   {
     id: 'rs',
     title: '3.1. Recrutamento e Seleção',
@@ -308,7 +307,6 @@ const slides: Slide[] = [
     accent: 'amber',
     highlightWords: ['onboarding', 'benefícios', 'ritual mensal', 'kit oficial']
   },
-  // 3.3 em CARDS
   {
     id: 'desligamentos',
     title: '3.3. Desligamentos',
@@ -343,7 +341,6 @@ const slides: Slide[] = [
     ],
     highlightWords: ['desligamento', 'rescisão', 'entrevistas de desligamento']
   },
-  // 3.4 em CARDS
   {
     id: 'dp',
     title: '3.4. DP, folha e rotinas burocráticas',
@@ -378,7 +375,6 @@ const slides: Slide[] = [
     ],
     highlightWords: ['NOU', 'NF-Express', 'People Ops', 'TotalPass']
   },
-  // 3.5 em CARDS
   {
     id: 'consultivo',
     title: '3.5. Atendimento às empresas e papel consultivo',
@@ -413,7 +409,6 @@ const slides: Slide[] = [
     ],
     highlightWords: ['clima', 'feedback', 'parceiro de negócio']
   },
-  // 3.6 em CARDS
   {
     id: 'cultura-rituais',
     title: '3.6. Cultura, rituais e experiência',
@@ -448,7 +443,6 @@ const slides: Slide[] = [
     ],
     highlightWords: ['Esportes T.Group', 'Café com T', 'engajamento']
   },
-    // 3.7 em CARDS
   {
     id: 'facilities',
     title: '3.7. Facilities e gestão da casa',
@@ -483,8 +477,7 @@ const slides: Slide[] = [
     ],
     highlightWords: ['Facilities', 'guardião', 'experiência física']
   },
-
-  // 3.8 (parte 1) – TI de gente em mockups
+  // 3.8 – agora com carrossel de mockups
   {
     id: 'ti-gente',
     title: '3.8. TI de gente e automações',
@@ -497,23 +490,17 @@ const slides: Slide[] = [
     ],
     accent: 'fuchsia',
     variant: 'devices',
-    highlightWords: [
-      'Check-in de almoço',
-      'NF-Express',
-      'HR Ops',
-      'T.Facilities Hub',
-      'dashboards'
-    ],
+    highlightWords: ['Check-in de almoço', 'NF-Express', 'HR Ops', 'dashboards'],
     devices: [
       {
         type: 'phone',
         label: 'Check-in do almoço • mobile',
-        image: '/gc-assets/mock-checkin-almoco.png'
+        image: '/gc-assets/mock-checkin-mobile.png'
       },
       {
         type: 'phone',
         label: 'T.Facilities Hub • mobile',
-        image: '/gc-assets/mock-tfacilities-hub.png'
+        image: '/gc-assets/mock-facilities-mobile.png'
       },
       {
         type: 'laptop',
@@ -523,40 +510,15 @@ const slides: Slide[] = [
       {
         type: 'laptop',
         label: 'HR Ops • desktop',
-        image: '/gc-assets/mock-hr-ops.png'
+        image: '/gc-assets/mock-hrops-desktop.png'
       },
       {
         type: 'laptop',
         label: 'NF-Express • desktop',
-        image: '/gc-assets/mock-nf-express.png'
+        image: '/gc-assets/mock-nfexpress-desktop.png'
       }
     ]
   },
-
-  // 3.8 (parte 2) – Governança e próximos passos
-  {
-    id: 'ti-gente-2',
-    title: '3.8. TI de gente e automações (continuação)',
-    subtitle: 'Governança, riscos e próximos passos',
-    highlight:
-      'Hoje, praticamente toda a TI de gente está concentrada em uma única pessoa — o que é raro e poderoso, mas também um ponto de atenção.',
-    bullets: [
-      'Centralização de conhecimento sobre DNS, domínios, Google Workspace, scripts e automações internas.',
-      'Dependência alta para manutenção de ferramentas críticas como NF-Express, HR Ops, Check-in do almoço e dashboards.',
-      'Risco de indisponibilidade ou descontinuidade se esse conhecimento não for documentado e compartilhado.',
-      'Oportunidade de tratar TI de gente como produto: backlog, priorização com sócios e visão integrada com GC e Financeiro.'
-    ],
-    accent: 'sky',
-    highlightWords: [
-      'Centralização',
-      'Dependência',
-      'Risco',
-      'backlog',
-      'produto'
-    ]
-  },
-
-  // 3.9 em CARDS
   {
     id: 'beneficios',
     title: '3.9. Benefícios e proposta de valor',
@@ -915,267 +877,71 @@ const renderCardsGrid = (items: PillSection[], accent: SlideAccent) => {
   );
 };
 
-// ========= COMPONENTES VISUAIS ESPECIAIS =========
+// ========= CARROSSEL DE MOCKUPS =========
 
-const renderOrgChart = (accent: SlideAccent) => {
-  const accentCfg = accentConfig[accent];
-  const levels = [
-    {
-      label: 'Sócios',
-      description:
-        'Definem a visão do T.Group e aprovam o plano de Gente e Cultura para a holding.'
-    },
-    {
-      label: 'Head de Gente e Cultura',
-      description:
-        'Traduz a estratégia dos sócios em políticas, fluxos e projetos de pessoas.'
-    },
-    {
-      label: 'Analista de DP/People Ops',
-      description:
-        'Garante a operação diária de folha, admissões, desligamentos e suporte às áreas.'
-    }
-  ];
-
-  return (
-    <motion.div
-      className="rounded-3xl bg-slate-950/75 border border-white/15 px-4 py-5 sm:px-6 sm:py-6 backdrop-blur-xl"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
-    >
-      <p className="text-xs sm:text-sm text-slate-300 mb-4">
-        Organização mínima proposta para GC, partindo dos sócios e chegando à operação de DP/People Ops.
-      </p>
-      <div className="relative flex flex-col items-stretch gap-4">
-        <div className="pointer-events-none absolute left-1/2 top-3 bottom-3 -translate-x-1/2 w-px bg-slate-700/60" />
-        {levels.map((level, idx) => (
-          <motion.div
-            key={level.label}
-            className="relative mx-auto flex w-full max-w-xs flex-col items-center gap-1 rounded-2xl bg-slate-900/80 border border-white/20 px-4 py-3 text-center"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08 * idx, duration: 0.35, ease: 'easeOut' }}
-          >
-            <div className="inline-flex items-center justify-center rounded-full bg-slate-950/80 border border-white/10 px-3 py-0.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-              {idx === 0
-                ? 'NÍVEL ESTRATÉGICO'
-                : idx === levels.length - 1
-                ? 'NÍVEL OPERACIONAL'
-                : 'NÍVEL TÁTICO'}
-            </div>
-            <div className="mt-1 text-sm sm:text-base font-semibold text-slate-50">
-              {level.label}
-            </div>
-            <p className="text-xs sm:text-sm text-slate-300">
-              {level.description}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-      <div className="mt-4 text-[10px] sm:text-xs text-slate-400">
-        * Este desenho é o ponto de partida para reduzir dependência de uma pessoa só e criar sustentabilidade de GC.
-      </div>
-    </motion.div>
-  );
+type DeviceCarouselProps = {
+  devices: DeviceMockup[];
+  accent: SlideAccent;
 };
 
-const renderPerformanceDashboard = (accent: SlideAccent) => {
+const DeviceCarousel = ({ devices, accent }: DeviceCarouselProps) => {
+  const [current, setCurrent] = useState(0);
   const accentCfg = accentConfig[accent];
 
-  return (
-    <motion.div
-      className="rounded-3xl bg-slate-950/75 border border-white/15 px-4 py-5 sm:px-6 sm:py-6 backdrop-blur-xl shadow-[0_0_40px_rgba(15,23,42,0.9)]"
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: 'easeOut' }}
-    >
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
-            Painel desejado • Exemplo
-          </p>
-          <p className="text-sm sm:text-base text-slate-50">
-            Performance, PDI e desenvolvimento
-          </p>
-        </div>
-        <div className="flex items-center gap-1 text-[10px] sm:text-xs">
-          <span className="rounded-full bg-slate-800/80 px-2 py-0.5 text-slate-200">
-            2025
-          </span>
-          <span className="rounded-full bg-slate-900/80 px-2 py-0.5 text-slate-400">
-            2026 plano
-          </span>
-        </div>
-      </div>
+  useEffect(() => {
+    if (!devices || devices.length <= 1) return;
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col gap-1">
-          <span className="text-[11px] sm:text-xs text-slate-300">
-            Engajamento geral
-          </span>
-          <div className="flex items-baseline gap-1">
-            <span className="text-xl sm:text-2xl font-semibold text-slate-50">
-              84%
-            </span>
-            <span className="text-[11px] text-emerald-300">
-              +4pp vs meta
-            </span>
-          </div>
-          <div className="mt-2 h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
-            <div
-              className={`h-full w-[84%] rounded-full ${accentCfg.bulletDot}`}
-            />
-          </div>
-        </div>
+    const id = window.setInterval(() => {
+      setCurrent((prev) => (prev + 1) % devices.length);
+    }, 2000);
 
-        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col gap-1">
-          <span className="text-[11px] sm:text-xs text-slate-300">
-            PDIs ativos
-          </span>
-          <div className="flex items-baseline gap-1">
-            <span className="text-xl sm:text-2xl font-semibold text-slate-50">
-              32
-            </span>
-            <span className="text-[11px] text-slate-400">
-              pessoas em acompanhamento
-            </span>
-          </div>
-          <div className="mt-2 h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
-            <div
-              className={`h-full w-[72%] rounded-full ${accentCfg.bulletDot}`}
-            />
-          </div>
-        </div>
+    return () => window.clearInterval(id);
+  }, [devices]);
 
-        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col gap-1">
-          <span className="text-[11px] sm:text-xs text-slate-300">
-            Feedbacks 1:1 registrados
-          </span>
-          <div className="flex items-baseline gap-1">
-            <span className="text-xl sm:text-2xl font-semibold text-slate-50">
-              74
-            </span>
-            <span className="text-[11px] text-slate-400">
-              no último trimestre
-            </span>
-          </div>
-          <div className="mt-2 h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
-            <div
-              className={`h-full w-[60%] rounded-full ${accentCfg.bulletDot}`}
-            />
-          </div>
-        </div>
-      </div>
+  if (!devices || devices.length === 0) return null;
 
-      <div className="mt-4 grid gap-3 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-300">
-            <span>Checkpoint trimestral</span>
-            <span>Q1 • Q2 • Q3 • Q4</span>
-          </div>
-          <div className="mt-3 flex h-24 gap-1">
-            {['Q1', 'Q2', 'Q3', 'Q4'].map((q, idx) => (
-              <div
-                key={q}
-                className="flex-1 flex flex-col justify-end gap-1 text-center"
-              >
-                <div className="flex-1 rounded-t-md bg-slate-800/80 overflow-hidden flex items-end justify-center">
-                  <div
-                    className={`w-3 rounded-t-md ${accentCfg.bulletDot}`}
-                    style={{ height: `${50 + 10 * idx}%` }}
-                  />
-                </div>
-                <span className="text-[10px] sm:text-[11px] text-slate-400">
-                  {q}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col gap-2">
-          <span className="text-[11px] sm:text-xs font-semibold text-slate-200">
-            Foco do painel
-          </span>
-          <ul className="space-y-1 text-[11px] sm:text-xs text-slate-300">
-            <li>• Quem já tem PDI estruturado e quem ainda não tem.</li>
-            <li>• Lideranças com poucos feedbacks no trimestre.</li>
-            <li>• Times com engajamento abaixo da meta.</li>
-            <li>• Evolução das metas definidas no início do ciclo.</li>
-          </ul>
-        </div>
-      </div>
-
-      <p className="mt-4 text-[10px] sm:text-xs text-slate-400">
-        Visual ilustrativo: mostra como os dados gerados pelo ciclo de
-        performance e PDI podem virar leitura rápida para sócios e
-        lideranças.
-      </p>
-    </motion.div>
-  );
-};
-
-const renderRecognitionTimeline = () => {
-  const milestones = [
-    {
-      tag: '1 ano',
-      title: 'Primeiro ciclo fechado',
-      description:
-        'Carta de agradecimento + presente simbólico conectado ao universo T.Group.'
-    },
-    {
-      tag: '3 anos',
-      title: 'Raiz formada',
-      description:
-        'Presente de experiência (vivência/ingressos) + destaque nos rituais de GC.'
-    },
-    {
-      tag: '5 anos',
-      title: 'Guardião da cultura',
-      description:
-        'Presente de maior valor, agradecimento público e momento de fala na confraternização.'
-    },
-    {
-      tag: '7 anos',
-      title: 'História viva',
-      description:
-        'Reconhecimento especial com narrativa da jornada e registro audiovisual.'
-    },
-    {
-      tag: '10 anos',
-      title: 'Tempo de casa lendário',
-      description:
-        'Celebração feita pelos sócios + presente marcante que simbolize a trajetória com o T.Group.'
-    }
-  ];
+  const device = devices[current];
+  const isPhone = device.type === 'phone';
 
   return (
-    <div className="mt-6">
-      <p className="mb-3 text-xs sm:text-sm text-slate-300">
-        Exemplo de trilha de reconhecimento por tempo de casa que nasce a
-        partir deste plano.
-      </p>
-      <div className="flex gap-3 overflow-x-auto pb-2">
-        {milestones.map((m, idx) => (
-          <motion.div
-            key={m.tag}
-            className="min-w-[140px] rounded-2xl bg-slate-950/75 border border-white/15 px-3 py-3 flex flex-col gap-1"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08 * idx, duration: 0.35, ease: 'easeOut' }}
-          >
-            <div className="inline-flex items-center rounded-full bg-white text-slate-900 px-2 py-0.5 text-[10px] font-semibold">
-              {m.tag}
-            </div>
-            <div className="text-xs sm:text-sm font-semibold text-slate-50 mt-1">
-              {m.title}
-            </div>
-            <p className="text-[11px] sm:text-xs text-slate-300">
-              {m.description}
-            </p>
-          </motion.div>
-        ))}
+    <div className="flex flex-col items-center gap-3">
+      <div
+        className={`relative ${
+          isPhone
+            ? 'h-64 w-32 sm:h-72 sm:w-36 md:h-80 md:w-40'
+            : 'h-52 w-80 sm:h-56 sm:w-88 md:h-64 md:w-[22rem]'
+        } rounded-[32px] border border-white/25 bg-slate-950/90 shadow-[0_0_40px_rgba(15,23,42,0.9)] backdrop-blur-2xl overflow-hidden`}
+      >
+        {isPhone && (
+          <div className="absolute inset-x-10 top-0 h-5 rounded-b-3xl bg-slate-900/90" />
+        )}
+        <Image
+          src={device.image}
+          alt={device.label}
+          fill
+          className="object-cover"
+          sizes="(min-width: 1024px) 360px, 100vw"
+        />
       </div>
+
+      <span className="text-xs sm:text-sm text-slate-300 text-center">
+        {device.label}
+      </span>
+
+      {devices.length > 1 && (
+        <div className="mt-1 flex items-center gap-1">
+          {devices.map((_, idx) => (
+            <span
+              key={idx}
+              className={`h-1.5 rounded-full transition-all ${
+                idx === current
+                  ? `w-4 ${accentCfg.bulletDot}`
+                  : 'w-2 bg-slate-600/60'
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -1211,6 +977,7 @@ export default function GC2026DeckPage() {
   useEffect(() => {
     window.addEventListener('keydown', handleKey as any);
     return () => window.removeEventListener('keydown', handleKey as any);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   const renderRoadmap = (sections: RoadmapSection[]) => (
@@ -1251,42 +1018,6 @@ export default function GC2026DeckPage() {
     </div>
   );
 
-    const renderDevices = (devices: DeviceMockup[]) => (
-    <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-      {devices.map((device) => {
-        const isPhone = device.type === 'phone';
-        return (
-          <div
-            key={device.label}
-            className="flex flex-col items-center gap-2"
-          >
-            <div
-              className={`relative ${
-                isPhone
-                  ? 'h-48 w-24 sm:h-56 sm:w-28 md:h-64 md:w-32'
-                  : 'h-40 w-56 sm:h-48 sm:w-64 md:h-56 md:w-80'
-              } rounded-[32px] border border-white/25 bg-slate-950/80 shadow-[0_0_40px_rgba(15,23,42,0.9)] backdrop-blur-2xl overflow-hidden`}
-            >
-              {isPhone && (
-                <div className="absolute inset-x-6 top-0 h-4 rounded-b-3xl bg-slate-900/80" />
-              )}
-              <Image
-                src={device.image}
-                alt={device.label}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 320px, 100vw"
-              />
-            </div>
-            <span className="text-xs sm:text-sm text-slate-300 text-center">
-              {device.label}
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
-
   const renderCompanyLogos = (logos: CompanyLogo[]) => (
     <div className="mt-6 flex flex-wrap items-center gap-4">
       {logos.map((logo) => (
@@ -1309,159 +1040,6 @@ export default function GC2026DeckPage() {
   const renderSlideContent = (slide: Slide) => {
     const variant = slide.variant ?? 'default';
 
-    // Slide especial – Estrutura (organograma)
-    if (slide.id === 'frente-estrutura') {
-      return (
-        <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-start">
-          <div className="flex flex-col gap-4">
-            <div>
-              <h1
-                className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
-              >
-                {slide.title}
-              </h1>
-              {slide.subtitle && (
-                <p className="mt-2 text-base sm:text-lg text-slate-200">
-                  {slide.subtitle}
-                </p>
-              )}
-            </div>
-
-            {slide.bullets && (
-              <motion.ul
-                className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
-                variants={listVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {slide.bullets.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    variants={itemVariants}
-                    className="flex gap-3"
-                  >
-                    <span
-                      className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
-                    />
-                    <span>
-                      {renderHighlightedText(
-                        item,
-                        slide.highlightWords,
-                        accent
-                      )}
-                    </span>
-                  </motion.li>
-                ))}
-              </motion.ul>
-            )}
-          </div>
-          {renderOrgChart(accent)}
-        </div>
-      );
-    }
-
-    // Slide especial – Performance (dashboard fake)
-    if (slide.id === 'frente-performance') {
-      return (
-        <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1.15fr)] items-start">
-          <div className="flex flex-col gap-4">
-            <div>
-              <h1
-                className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
-              >
-                {slide.title}
-              </h1>
-              {slide.subtitle && (
-                <p className="mt-2 text-base sm:text-lg text-slate-200">
-                  {slide.subtitle}
-                </p>
-              )}
-            </div>
-
-            {slide.bullets && (
-              <motion.ul
-                className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
-                variants={listVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {slide.bullets.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    variants={itemVariants}
-                    className="flex gap-3"
-                  >
-                    <span
-                      className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
-                    />
-                    <span>
-                      {renderHighlightedText(
-                        item,
-                        slide.highlightWords,
-                        accent
-                      )}
-                    </span>
-                  </motion.li>
-                ))}
-              </motion.ul>
-            )}
-          </div>
-          {renderPerformanceDashboard(accent)}
-        </div>
-      );
-    }
-
-    // Slide especial – Cultura & Reconhecimento (timeline)
-    if (slide.id === 'frente-cultura') {
-      return (
-        <div className="relative flex flex-col gap-4">
-          <div>
-            <h1
-              className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
-            >
-              {slide.title}
-            </h1>
-            {slide.subtitle && (
-              <p className="mt-2 text-base sm:text-lg text-slate-200">
-                {slide.subtitle}
-              </p>
-            )}
-          </div>
-
-          {slide.bullets && (
-            <motion.ul
-              className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
-              variants={listVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {slide.bullets.map((item, i) => (
-                <motion.li
-                  key={i}
-                  variants={itemVariants}
-                  className="flex gap-3"
-                >
-                  <span
-                    className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
-                  />
-                  <span>
-                    {renderHighlightedText(
-                      item,
-                      slide.highlightWords,
-                      accent
-                    )}
-                  </span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          )}
-
-          {renderRecognitionTimeline()}
-        </div>
-      );
-    }
-
-    // ROADMAP
     if (variant === 'roadmap' && slide.roadmap) {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1482,7 +1060,6 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // DEVICES
     if (variant === 'devices' && slide.devices) {
       return (
         <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1.1fr)] items-center">
@@ -1544,13 +1121,12 @@ export default function GC2026DeckPage() {
             )}
           </div>
           <div className="flex justify-center lg:justify-end">
-            {renderDevices(slide.devices)}
+            <DeviceCarousel devices={slide.devices} accent={accent} />
           </div>
         </div>
       );
     }
 
-    // CARDS (vários 3.x, 4, 5, 3.8 camadas, etc.)
     if (variant === 'cards' && slide.cards) {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1590,7 +1166,6 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // SLIDE com pillSections (Escopo geral)
     if (slide.pillSections && slide.id === 'escopo-geral') {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1611,7 +1186,6 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // SLIDE específico: onboarding 0–90
     if (slide.id === 'frente-onboarding') {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1661,7 +1235,6 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // DEFAULT
     return (
       <div className="relative flex flex-col gap-4">
         <div>

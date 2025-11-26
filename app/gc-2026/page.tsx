@@ -169,7 +169,7 @@ const slides: Slide[] = [
     title: 'Gente e Cultura T.Group',
     subtitle: 'Análise do cenário atual e plano 2026',
     highlight:
-      'De um exército de uma só pessoa para um sistema sustentável de pessoas para toda a holding.',
+      'De um exército de duas pessoas para um sistema sustentável de pessoas para toda a holding.',
     accent: 'fuchsia',
     highlightWords: ['sistema sustentável', 'holding', 'Gente e Cultura']
   },
@@ -782,7 +782,7 @@ const slides: Slide[] = [
       'Não é fazer mais coisas – é fazer do jeito certo, com estrutura, processos e ferramentas adequadas.',
       'Gente e Cultura se posiciona como área tecnológica, estratégica e protagonista do futuro do T.Group.'
     ],
-    footer: '“Não é RH, é Gente e Cultura.”',
+    footer: '“Não é RH, é GC.”',
     accent: 'fuchsia',
     highlightWords: ['sistema de pessoas', 'dados e tecnologia', 'protagonista']
   }

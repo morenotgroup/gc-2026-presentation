@@ -477,7 +477,7 @@ const slides: Slide[] = [
     ],
     highlightWords: ['Facilities', 'guardião', 'experiência física']
   },
-  // 3.8 – agora com carrossel de mockups
+  // 3.8 – carrossel de mockups
   {
     id: 'ti-gente',
     title: '3.8. TI de gente e automações',
@@ -1217,6 +1217,112 @@ export default function GC2026DeckPage() {
     );
   };
 
+  const renderGCOrgChart = () => (
+    <motion.div
+      className="relative w-full max-w-md rounded-3xl border border-white/15 bg-slate-950/85 shadow-[0_0_60px_rgba(15,23,42,0.95)] overflow-hidden backdrop-blur-2xl px-5 pt-4 pb-5"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
+          Organograma mínimo • GC & sócios
+        </span>
+        <span className="h-1.5 w-8 rounded-full bg-gradient-to-r from-fuchsia-400 via-sky-400 to-emerald-400" />
+      </div>
+
+      <div className="flex flex-col items-center gap-3 text-xs">
+        {/* Sócios */}
+        <div className="rounded-2xl bg-slate-900/90 border border-white/15 px-4 py-3 shadow-[0_0_30px_rgba(15,23,42,0.9)]">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400 mb-1">
+            Topo
+          </p>
+          <p className="text-sm font-semibold text-slate-50">
+            Sócios do T.Group
+          </p>
+          <p className="text-[11px] text-slate-300 mt-1">
+            Direcionam estratégia, aprovam plano de GC e investimentos.
+          </p>
+        </div>
+
+        <div className="h-4 w-px bg-slate-600/60" />
+
+        {/* Head GC */}
+        <div className="rounded-2xl bg-slate-900/95 border border-fuchsia-400/40 px-4 py-3 shadow-[0_0_35px_rgba(217,70,239,0.45)]">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-fuchsia-300 mb-1">
+            GC estratégico
+          </p>
+          <p className="text-sm font-semibold text-slate-50">
+            Head de Gente e Cultura
+          </p>
+          <p className="text-[11px] text-slate-300 mt-1">
+            Faz a ponte entre sócios, DP/People Ops, Facilities e lideranças
+            das empresas.
+          </p>
+        </div>
+
+        <div className="h-4 w-px bg-slate-600/60" />
+
+        {/* Base: DP / Facilities / Lideranças */}
+        <div className="grid grid-cols-3 gap-2 w-full">
+          <div className="rounded-2xl bg-slate-900/80 border border-white/12 px-3 py-2">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
+              Operação
+            </p>
+            <p className="text-xs font-semibold text-slate-50 mt-1">
+              Analista de DP/
+              <br />
+              People Ops
+            </p>
+            <p className="text-[11px] text-slate-300 mt-1">
+              Rotinas, folha, NF, cadastros e compliance.
+            </p>
+          </div>
+
+          <div className="rounded-2xl bg-slate-900/80 border border-white/12 px-3 py-2">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
+              Casa
+            </p>
+            <p className="text-xs font-semibold text-slate-50 mt-1">
+              Facilities
+              <br />
+              (mentoria)
+            </p>
+            <p className="text-[11px] text-slate-300 mt-1">
+              Experiência física, limpeza, cozinha e sede.
+            </p>
+          </div>
+
+          <div className="rounded-2xl bg-slate-900/80 border border-white/12 px-3 py-2">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
+              Negócio
+            </p>
+            <p className="text-xs font-semibold text-slate-50 mt-1">
+              Lideranças
+              <br />
+              das empresas
+            </p>
+            <p className="text-[11px] text-slate-300 mt-1">
+              Times de T.Youth, T.Brands, T.Dreams, T.Venues, WAS etc.
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-3 text-[11px] text-slate-400 text-center">
+          Visual de referência para a conversa: GC no centro, conectando{" "}
+          <span className="text-fuchsia-300 font-semibold">
+            estratégia dos sócios
+          </span>{" "}
+          e{" "}
+          <span className="text-sky-300 font-semibold">
+            operação de pessoas
+          </span>{" "}
+          na holding.
+        </p>
+      </div>
+    </motion.div>
+  );
+
   const renderSlideContent = (slide: Slide) => {
     const variant = slide.variant ?? 'default';
 
@@ -1309,7 +1415,7 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // CARDS (vários slides 3.x, 4 e 5)
+    // CARDS
     if (variant === 'cards' && slide.cards) {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1366,6 +1472,60 @@ export default function GC2026DeckPage() {
             )}
           </div>
           {renderCardsGrid(slide.pillSections, current.accent ?? defaultAccent)}
+        </div>
+      );
+    }
+
+    // SLIDE específico: 7.1 – Estrutura + organograma GC/sócios
+    if (slide.id === 'frente-estrutura') {
+      return (
+        <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1.1fr)] items-start">
+          <div className="flex flex-col gap-4">
+            <div>
+              <h1
+                className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+              >
+                {slide.title}
+              </h1>
+              {slide.subtitle && (
+                <p className="mt-2 text-base sm:text-lg text-slate-200">
+                  {slide.subtitle}
+                </p>
+              )}
+            </div>
+
+            {slide.bullets && (
+              <motion.ul
+                className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
+                variants={listVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {slide.bullets.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    variants={itemVariants}
+                    className="flex gap-3"
+                  >
+                    <span
+                      className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+                    />
+                    <span>
+                      {renderHighlightedText(
+                        item,
+                        slide.highlightWords,
+                        current.accent ?? defaultAccent
+                      )}
+                    </span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </div>
+
+          <div className="flex justify-center lg:justify-end">
+            {renderGCOrgChart()}
+          </div>
         </div>
       );
     }

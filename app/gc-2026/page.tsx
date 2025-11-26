@@ -42,8 +42,8 @@ type Slide = {
   devices?: DeviceMockup[];
   highlightWords?: string[];
   companyLogos?: CompanyLogo[];
-  pillSections?: PillSection[]; // usado em “Escopo real”
-  cards?: PillSection[]; // usado nos slides que vamos transformar em cards
+  pillSections?: PillSection[];
+  cards?: PillSection[];
 };
 
 const accentConfig: Record<
@@ -294,7 +294,6 @@ const slides: Slide[] = [
     ],
     highlightWords: ['DISC', 'alinhamento cultural']
   },
-  // 3.2 segue em bullets (já está bem diferente por causa do subtítulo “Onboarding ainda fragmentado”)
   {
     id: 'admissao',
     title: '3.2. Admissão e integração',
@@ -484,7 +483,7 @@ const slides: Slide[] = [
     ],
     highlightWords: ['Facilities', 'guardião', 'experiência física']
   },
-  // 3.8 segue como DEVICES (já estava diferente)
+  // 3.8 (parte 1) – DEVICES
   {
     id: 'ti-gente',
     title: '3.8. TI de gente e automações',
@@ -492,12 +491,11 @@ const slides: Slide[] = [
     bullets: [
       'Criação e cancelamento de e-mails, gestão de permissões e Drives no Google Workspace.',
       'Configuração de domínios em Locaweb e GoDaddy (DNS, SPF, DKIM).',
-      'Criação de soluções internas: Check-in de almoço, NF-Express, HR Ops, T.Facilities Hub/Rotas, dashboards em Looker Studio.',
       'Nível de automação raro para agências do porte do T.Group, concentrado em uma única pessoa.'
     ],
     accent: 'fuchsia',
     variant: 'devices',
-    highlightWords: ['Check-in de almoço', 'NF-Express', 'HR Ops', 'dashboards'],
+    highlightWords: ['Google Workspace', 'domínios', 'automação'],
     devices: [
       {
         type: 'phone',
@@ -510,6 +508,37 @@ const slides: Slide[] = [
         image: '/gc-assets/device-laptop-nfexpress.png'
       }
     ]
+  },
+  // 3.8 (parte 2) – CAMADAS
+  {
+    id: 'ti-gente-camadas',
+    title: '3.8. TI de gente e automações (camadas)',
+    subtitle: 'Da infraestrutura aos dados de pessoas',
+    accent: 'fuchsia',
+    variant: 'cards',
+    cards: [
+      {
+        title: 'Camada 1 • Infraestrutura',
+        description:
+          'Google Workspace, domínios, DNS, SPF e DKIM garantindo que e-mails, acessos e segurança mínima funcionem para toda a holding.'
+      },
+      {
+        title: 'Camada 2 • Ferramentas internas',
+        description:
+          'Check-in de almoço, NF-Express, HR Ops, T.Facilities Hub/Rotas e outros fluxos criados sob medida para o jeito T.Group de trabalhar.'
+      },
+      {
+        title: 'Camada 3 • Dados e dashboards',
+        description:
+          'Integração com planilhas e painéis em Looker Studio, traduzindo rotinas em indicadores de gente, custos e operação.'
+      },
+      {
+        title: 'Camada 4 • Experiência do colaborador',
+        description:
+          'Portas únicas de entrada (HR Ops, intranet) para que o colaborador peça o que precisa sem depender de mensagens soltas no WhatsApp ou e-mail.'
+      }
+    ],
+    highlightWords: ['Infraestrutura', 'Ferramentas internas', 'Dados e dashboards']
   },
   // 3.9 em CARDS
   {
@@ -870,6 +899,271 @@ const renderCardsGrid = (items: PillSection[], accent: SlideAccent) => {
   );
 };
 
+// ========= COMPONENTES VISUAIS ESPECIAIS =========
+
+const renderOrgChart = (accent: SlideAccent) => {
+  const accentCfg = accentConfig[accent];
+  const levels = [
+    {
+      label: 'Sócios',
+      description:
+        'Definem a visão do T.Group e aprovam o plano de Gente e Cultura para a holding.'
+    },
+    {
+      label: 'Head de Gente e Cultura',
+      description:
+        'Traduz a estratégia dos sócios em políticas, fluxos e projetos de pessoas.'
+    },
+    {
+      label: 'Analista de DP/People Ops',
+      description:
+        'Garante a operação diária de folha, admissões, desligamentos e suporte às áreas.'
+    }
+  ];
+
+  return (
+    <motion.div
+      className="rounded-3xl bg-slate-950/75 border border-white/15 px-4 py-5 sm:px-6 sm:py-6 backdrop-blur-xl"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+    >
+      <p className="text-xs sm:text-sm text-slate-300 mb-4">
+        Organização mínima proposta para GC, partindo dos sócios e chegando à operação de DP/People Ops.
+      </p>
+      <div className="relative flex flex-col items-stretch gap-4">
+        <div className="pointer-events-none absolute left-1/2 top-3 bottom-3 -translate-x-1/2 w-px bg-slate-700/60" />
+        {levels.map((level, idx) => (
+          <motion.div
+            key={level.label}
+            className="relative mx-auto flex w-full max-w-xs flex-col items-center gap-1 rounded-2xl bg-slate-900/80 border border-white/20 px-4 py-3 text-center"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 * idx, duration: 0.35, ease: 'easeOut' }}
+          >
+            <div className="inline-flex items-center justify-center rounded-full bg-slate-950/80 border border-white/10 px-3 py-0.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+              {idx === 0
+                ? 'NÍVEL ESTRATÉGICO'
+                : idx === levels.length - 1
+                ? 'NÍVEL OPERACIONAL'
+                : 'NÍVEL TÁTICO'}
+            </div>
+            <div className="mt-1 text-sm sm:text-base font-semibold text-slate-50">
+              {level.label}
+            </div>
+            <p className="text-xs sm:text-sm text-slate-300">
+              {level.description}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+      <div className="mt-4 text-[10px] sm:text-xs text-slate-400">
+        * Este desenho é o ponto de partida para reduzir dependência de uma pessoa só e criar sustentabilidade de GC.
+      </div>
+    </motion.div>
+  );
+};
+
+const renderPerformanceDashboard = (accent: SlideAccent) => {
+  const accentCfg = accentConfig[accent];
+
+  return (
+    <motion.div
+      className="rounded-3xl bg-slate-950/75 border border-white/15 px-4 py-5 sm:px-6 sm:py-6 backdrop-blur-xl shadow-[0_0_40px_rgba(15,23,42,0.9)]"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: 'easeOut' }}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
+            Painel desejado • Exemplo
+          </p>
+          <p className="text-sm sm:text-base text-slate-50">
+            Performance, PDI e desenvolvimento
+          </p>
+        </div>
+        <div className="flex items-center gap-1 text-[10px] sm:text-xs">
+          <span className="rounded-full bg-slate-800/80 px-2 py-0.5 text-slate-200">
+            2025
+          </span>
+          <span className="rounded-full bg-slate-900/80 px-2 py-0.5 text-slate-400">
+            2026 plano
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col gap-1">
+          <span className="text-[11px] sm:text-xs text-slate-300">
+            Engajamento geral
+          </span>
+          <div className="flex items-baseline gap-1">
+            <span className="text-xl sm:text-2xl font-semibold text-slate-50">
+              84%
+            </span>
+            <span className="text-[11px] text-emerald-300">
+              +4pp vs meta
+            </span>
+          </div>
+          <div className="mt-2 h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+            <div
+              className={`h-full w-[84%] rounded-full ${accentCfg.bulletDot}`}
+            />
+          </div>
+        </div>
+
+        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col gap-1">
+          <span className="text-[11px] sm:text-xs text-slate-300">
+            PDIs ativos
+          </span>
+          <div className="flex items-baseline gap-1">
+            <span className="text-xl sm:text-2xl font-semibold text-slate-50">
+              32
+            </span>
+            <span className="text-[11px] text-slate-400">
+              pessoas em acompanhamento
+            </span>
+          </div>
+          <div className="mt-2 h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+            <div
+              className={`h-full w-[72%] rounded-full ${accentCfg.bulletDot}`}
+            />
+          </div>
+        </div>
+
+        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col gap-1">
+          <span className="text-[11px] sm:text-xs text-slate-300">
+            Feedbacks 1:1 registrados
+          </span>
+          <div className="flex items-baseline gap-1">
+            <span className="text-xl sm:text-2xl font-semibold text-slate-50">
+              74
+            </span>
+            <span className="text-[11px] text-slate-400">
+              no último trimestre
+            </span>
+          </div>
+          <div className="mt-2 h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+            <div
+              className={`h-full w-[60%] rounded-full ${accentCfg.bulletDot}`}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 grid gap-3 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-300">
+            <span>Checkpoint trimestral</span>
+            <span>Q1 • Q2 • Q3 • Q4</span>
+          </div>
+          <div className="mt-3 flex h-24 gap-1">
+            {['Q1', 'Q2', 'Q3', 'Q4'].map((q, idx) => (
+              <div
+                key={q}
+                className="flex-1 flex flex-col justify-end gap-1 text-center"
+              >
+                <div className="flex-1 rounded-t-md bg-slate-800/80 overflow-hidden flex items-end justify-center">
+                  <div
+                    className={`w-3 rounded-t-md ${accentCfg.bulletDot}`}
+                    style={{ height: `${50 + 10 * idx}%` }}
+                  />
+                </div>
+                <span className="text-[10px] sm:text-[11px] text-slate-400">
+                  {q}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-2xl bg-slate-900/80 border border-white/15 px-3 py-3 flex flex-col gap-2">
+          <span className="text-[11px] sm:text-xs font-semibold text-slate-200">
+            Foco do painel
+          </span>
+          <ul className="space-y-1 text-[11px] sm:text-xs text-slate-300">
+            <li>• Quem já tem PDI estruturado e quem ainda não tem.</li>
+            <li>• Lideranças com poucos feedbacks no trimestre.</li>
+            <li>• Times com engajamento abaixo da meta.</li>
+            <li>• Evolução das metas definidas no início do ciclo.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p className="mt-4 text-[10px] sm:text-xs text-slate-400">
+        Visual ilustrativo: mostra como os dados gerados pelo ciclo de
+        performance e PDI podem virar leitura rápida para sócios e
+        lideranças.
+      </p>
+    </motion.div>
+  );
+};
+
+const renderRecognitionTimeline = () => {
+  const milestones = [
+    {
+      tag: '1 ano',
+      title: 'Primeiro ciclo fechado',
+      description:
+        'Carta de agradecimento + presente simbólico conectado ao universo T.Group.'
+    },
+    {
+      tag: '3 anos',
+      title: 'Raiz formada',
+      description:
+        'Presente de experiência (vivência/ingressos) + destaque nos rituais de GC.'
+    },
+    {
+      tag: '5 anos',
+      title: 'Guardião da cultura',
+      description:
+        'Presente de maior valor, agradecimento público e momento de fala na confraternização.'
+    },
+    {
+      tag: '7 anos',
+      title: 'História viva',
+      description:
+        'Reconhecimento especial com narrativa da jornada e registro audiovisual.'
+    },
+    {
+      tag: '10 anos',
+      title: 'Tempo de casa lendário',
+      description:
+        'Celebração feita pelos sócios + presente marcante que simbolize a trajetória com o T.Group.'
+    }
+  ];
+
+  return (
+    <div className="mt-6">
+      <p className="mb-3 text-xs sm:text-sm text-slate-300">
+        Exemplo de trilha de reconhecimento por tempo de casa que nasce a
+        partir deste plano.
+      </p>
+      <div className="flex gap-3 overflow-x-auto pb-2">
+        {milestones.map((m, idx) => (
+          <motion.div
+            key={m.tag}
+            className="min-w-[140px] rounded-2xl bg-slate-950/75 border border-white/15 px-3 py-3 flex flex-col gap-1"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 * idx, duration: 0.35, ease: 'easeOut' }}
+          >
+            <div className="inline-flex items-center rounded-full bg-white text-slate-900 px-2 py-0.5 text-[10px] font-semibold">
+              {m.tag}
+            </div>
+            <div className="text-xs sm:text-sm font-semibold text-slate-50 mt-1">
+              {m.title}
+            </div>
+            <p className="text-[11px] sm:text-xs text-slate-300">
+              {m.description}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // ========= COMPONENTE PRINCIPAL =========
 
 export default function GC2026DeckPage() {
@@ -901,7 +1195,6 @@ export default function GC2026DeckPage() {
   useEffect(() => {
     window.addEventListener('keydown', handleKey as any);
     return () => window.removeEventListener('keydown', handleKey as any);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   const renderRoadmap = (sections: RoadmapSection[]) => (
@@ -1000,6 +1293,158 @@ export default function GC2026DeckPage() {
   const renderSlideContent = (slide: Slide) => {
     const variant = slide.variant ?? 'default';
 
+    // Slide especial – Estrutura (organograma)
+    if (slide.id === 'frente-estrutura') {
+      return (
+        <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-start">
+          <div className="flex flex-col gap-4">
+            <div>
+              <h1
+                className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+              >
+                {slide.title}
+              </h1>
+              {slide.subtitle && (
+                <p className="mt-2 text-base sm:text-lg text-slate-200">
+                  {slide.subtitle}
+                </p>
+              )}
+            </div>
+
+            {slide.bullets && (
+              <motion.ul
+                className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
+                variants={listVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {slide.bullets.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    variants={itemVariants}
+                    className="flex gap-3"
+                  >
+                    <span
+                      className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+                    />
+                    <span>
+                      {renderHighlightedText(
+                        item,
+                        slide.highlightWords,
+                        accent
+                      )}
+                    </span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </div>
+          {renderOrgChart(accent)}
+        </div>
+      );
+    }
+
+    // Slide especial – Performance (dashboard fake)
+    if (slide.id === 'frente-performance') {
+      return (
+        <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1.15fr)] items-start">
+          <div className="flex flex-col gap-4">
+            <div>
+              <h1
+                className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+              >
+                {slide.title}
+              </h1>
+              {slide.subtitle && (
+                <p className="mt-2 text-base sm:text-lg text-slate-200">
+                  {slide.subtitle}
+                </p>
+              )}
+            </div>
+
+            {slide.bullets && (
+              <motion.ul
+                className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
+                variants={listVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {slide.bullets.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    variants={itemVariants}
+                    className="flex gap-3"
+                  >
+                    <span
+                      className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+                    />
+                    <span>
+                      {renderHighlightedText(
+                        item,
+                        slide.highlightWords,
+                        accent
+                      )}
+                    </span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </div>
+          {renderPerformanceDashboard(accent)}
+        </div>
+      );
+    }
+
+    // Slide especial – Cultura & Reconhecimento (timeline)
+    if (slide.id === 'frente-cultura') {
+      return (
+        <div className="relative flex flex-col gap-4">
+          <div>
+            <h1
+              className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+            >
+              {slide.title}
+            </h1>
+            {slide.subtitle && (
+              <p className="mt-2 text-base sm:text-lg text-slate-200">
+                {slide.subtitle}
+              </p>
+            )}
+          </div>
+
+          {slide.bullets && (
+            <motion.ul
+              className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
+              variants={listVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {slide.bullets.map((item, i) => (
+                <motion.li
+                  key={i}
+                  variants={itemVariants}
+                  className="flex gap-3"
+                >
+                  <span
+                    className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+                  />
+                  <span>
+                    {renderHighlightedText(
+                      item,
+                      slide.highlightWords,
+                      accent
+                    )}
+                  </span>
+                </motion.li>
+              ))}
+            </motion.ul>
+          )}
+
+          {renderRecognitionTimeline()}
+        </div>
+      );
+    }
+
     // ROADMAP
     if (variant === 'roadmap' && slide.roadmap) {
       return (
@@ -1089,7 +1534,7 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // CARDS (para vários slides 3.x, 4 e 5)
+    // CARDS (vários 3.x, 4, 5, 3.8 camadas, etc.)
     if (variant === 'cards' && slide.cards) {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1129,7 +1574,7 @@ export default function GC2026DeckPage() {
       );
     }
 
-    // SLIDE com pillSections (Escopo real)
+    // SLIDE com pillSections (Escopo geral)
     if (slide.pillSections && slide.id === 'escopo-geral') {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1220,7 +1665,11 @@ export default function GC2026DeckPage() {
           <p
             className={`mt-2 text-base sm:text-lg text-slate-100/90 border-l-2 pl-3 ${accentCfg.highlightBorder}`}
           >
-            {renderHighlightedText(slide.highlight, slide.highlightWords, accent)}
+            {renderHighlightedText(
+              slide.highlight,
+              slide.highlightWords,
+              accent
+            )}
           </p>
         )}
 

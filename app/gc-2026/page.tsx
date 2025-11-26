@@ -448,7 +448,7 @@ const slides: Slide[] = [
     ],
     highlightWords: ['Esportes T.Group', 'Café com T', 'engajamento']
   },
-  // 3.7 em CARDS
+    // 3.7 em CARDS
   {
     id: 'facilities',
     title: '3.7. Facilities e gestão da casa',
@@ -483,9 +483,9 @@ const slides: Slide[] = [
     ],
     highlightWords: ['Facilities', 'guardião', 'experiência física']
   },
-  // 3.8 (parte 1) – DEVICES
+
+  // 3.8 (parte 1) – TI de gente em mockups
   {
-      {
     id: 'ti-gente',
     title: '3.8. TI de gente e automações',
     subtitle: 'Dashboard financeiro, HR Ops e fluxos do dia a dia',
@@ -532,37 +532,30 @@ const slides: Slide[] = [
       }
     ]
   },
-  // 3.8 (parte 2) – CAMADAS
+
+  // 3.8 (parte 2) – Governança e próximos passos
   {
-    id: 'ti-gente-camadas',
-    title: '3.8. TI de gente e automações (camadas)',
-    subtitle: 'Da infraestrutura aos dados de pessoas',
-    accent: 'fuchsia',
-    variant: 'cards',
-    cards: [
-      {
-        title: 'Camada 1 • Infraestrutura',
-        description:
-          'Google Workspace, domínios, DNS, SPF e DKIM garantindo que e-mails, acessos e segurança mínima funcionem para toda a holding.'
-      },
-      {
-        title: 'Camada 2 • Ferramentas internas',
-        description:
-          'Check-in de almoço, NF-Express, HR Ops, T.Facilities Hub/Rotas e outros fluxos criados sob medida para o jeito T.Group de trabalhar.'
-      },
-      {
-        title: 'Camada 3 • Dados e dashboards',
-        description:
-          'Integração com planilhas e painéis em Looker Studio, traduzindo rotinas em indicadores de gente, custos e operação.'
-      },
-      {
-        title: 'Camada 4 • Experiência do colaborador',
-        description:
-          'Portas únicas de entrada (HR Ops, intranet) para que o colaborador peça o que precisa sem depender de mensagens soltas no WhatsApp ou e-mail.'
-      }
+    id: 'ti-gente-2',
+    title: '3.8. TI de gente e automações (continuação)',
+    subtitle: 'Governança, riscos e próximos passos',
+    highlight:
+      'Hoje, praticamente toda a TI de gente está concentrada em uma única pessoa — o que é raro e poderoso, mas também um ponto de atenção.',
+    bullets: [
+      'Centralização de conhecimento sobre DNS, domínios, Google Workspace, scripts e automações internas.',
+      'Dependência alta para manutenção de ferramentas críticas como NF-Express, HR Ops, Check-in do almoço e dashboards.',
+      'Risco de indisponibilidade ou descontinuidade se esse conhecimento não for documentado e compartilhado.',
+      'Oportunidade de tratar TI de gente como produto: backlog, priorização com sócios e visão integrada com GC e Financeiro.'
     ],
-    highlightWords: ['Infraestrutura', 'Ferramentas internas', 'Dados e dashboards']
+    accent: 'sky',
+    highlightWords: [
+      'Centralização',
+      'Dependência',
+      'Risco',
+      'backlog',
+      'produto'
+    ]
   },
+
   // 3.9 em CARDS
   {
     id: 'beneficios',

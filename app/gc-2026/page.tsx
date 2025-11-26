@@ -1037,9 +1037,190 @@ export default function GC2026DeckPage() {
     </div>
   );
 
+  const renderPerformanceDashboard = () => (
+    <motion.div
+      className="relative w-full max-w-md rounded-3xl border border-white/15 bg-slate-950/80 shadow-[0_0_60px_rgba(15,23,42,0.95)] overflow-hidden backdrop-blur-2xl"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* barra do topo fake tipo app */}
+      <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-white/10">
+        <div className="flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-emerald-400" />
+          <span className="h-2 w-2 rounded-full bg-amber-400" />
+          <span className="h-2 w-2 rounded-full bg-fuchsia-400" />
+        </div>
+        <span className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
+          Painel de performance • exemplo
+        </span>
+      </div>
+
+      <div className="px-5 pb-4 pt-3 space-y-4">
+        {/* métricas principais */}
+        <div className="grid grid-cols-3 gap-3 text-xs sm:text-[13px]">
+          <div className="rounded-2xl bg-slate-900/80 border border-white/10 px-3 py-2.5 flex flex-col gap-1">
+            <span className="text-[11px] uppercase tracking-wide text-slate-400">
+              Engajamento
+            </span>
+            <span className="text-lg font-semibold text-slate-50">82%</span>
+            <span className="text-[11px] text-emerald-300">
+              +5 pts vs. último ciclo
+            </span>
+          </div>
+
+          <div className="rounded-2xl bg-slate-900/80 border border-white/10 px-3 py-2.5 flex flex-col gap-1">
+            <span className="text-[11px] uppercase tracking-wide text-slate-400">
+              Ciclo concluído
+            </span>
+            <span className="text-lg font-semibold text-slate-50">65%</span>
+            <span className="text-[11px] text-amber-300">
+              times ainda fechando avaliações
+            </span>
+          </div>
+
+          <div className="rounded-2xl bg-slate-900/80 border border-white/10 px-3 py-2.5 flex flex-col gap-1">
+            <span className="text-[11px] uppercase tracking-wide text-slate-400">
+              1:1 realizados
+            </span>
+            <span className="text-lg font-semibold text-slate-50">37</span>
+            <span className="text-[11px] text-sky-300">
+              últimos 90 dias
+            </span>
+          </div>
+        </div>
+
+        {/* barra de PDI */}
+        <div className="rounded-2xl bg-slate-900/70 border border-white/10 px-3 py-3 space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-300">
+            <span>PDIs no prazo</span>
+            <span className="font-semibold text-emerald-300">18 de 24</span>
+          </div>
+          <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+            <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-fuchsia-400" />
+          </div>
+          <p className="text-[11px] text-slate-400">
+            Visualização ilustrativa de como o painel pode mostrar a saúde dos planos de desenvolvimento.
+          </p>
+        </div>
+
+        {/* mini kanban de PDI */}
+        <div className="grid grid-cols-3 gap-3 text-[11px]">
+          <div>
+            <div className="inline-flex items-center gap-1">
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+              />
+              <span className="font-semibold text-slate-100">
+                Planejado
+              </span>
+            </div>
+            <div className="mt-2 space-y-1.5">
+              <div className="rounded-xl bg-slate-900/80 border border-white/5 px-2 py-1.5">
+                <p className="text-slate-100">Onboarding de novos líderes</p>
+              </div>
+              <div className="rounded-xl bg-slate-900/80 border border-white/5 px-2 py-1.5">
+                <p className="text-slate-100">Treinamento de feedback</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold text-slate-100">Em andamento</span>
+            <div className="mt-2 space-y-1.5">
+              <div className="rounded-xl bg-slate-900/80 border border-emerald-500/40 px-2 py-1.5">
+                <p className="text-slate-100">Rotina de 1:1 trimestral</p>
+              </div>
+              <div className="rounded-xl bg-slate-900/80 border border-emerald-500/20 px-2 py-1.5">
+                <p className="text-slate-100">Metas 2026 T.Youth</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold text-slate-100">Concluído</span>
+            <div className="mt-2 space-y-1.5">
+              <div className="rounded-xl bg-slate-900/80 border border-sky-500/40 px-2 py-1.5">
+                <p className="text-slate-100">Piloto de avaliação 2025</p>
+              </div>
+              <div className="rounded-xl bg-slate-900/80 border border-sky-500/20 px-2 py-1.5">
+                <p className="text-slate-100">PDI da liderança WAS</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+
+  const renderRecognitionTimeline = () => {
+    const milestones = [
+      {
+        tag: '1 ano',
+        title: 'Primeiro ciclo',
+        desc: 'Carta assinada pelos sócios + mimo simbólico ligado ao universo da pessoa.'
+      },
+      {
+        tag: '3 anos',
+        title: 'Experiência T.Group',
+        desc: 'Vale-experiência (show, jantar ou rolê cultural) para a pessoa + 1 acompanhante.'
+      },
+      {
+        tag: '5 anos',
+        title: 'Investir em você',
+        desc: 'Ajuda de custo para curso, congresso ou certificação ligada à carreira.'
+      },
+      {
+        tag: '7 anos',
+        title: 'Memórias e descanso',
+        desc: 'Day-use ou fim de semana em hotel/parque, reforçando cuidado com bem-estar.'
+      },
+      {
+        tag: '10 anos',
+        title: 'Marco de década',
+        desc: 'Presente de alto impacto a combinar (viagem, upgrade acadêmico, etc.).'
+      }
+    ];
+
+    return (
+      <div className="mt-6">
+        <p className="text-sm sm:text-base text-slate-300 mb-4">
+          Exemplo de trilha de reconhecimento por tempo de casa conectada ao DNA jovem do T.Group.
+        </p>
+        <div className="relative mt-4">
+          <div className="absolute inset-x-8 top-1/2 hidden h-px bg-slate-600/40 lg:block" />
+          <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {milestones.map((step) => (
+              <div
+                key={step.tag}
+                className="relative flex flex-col gap-2 rounded-2xl bg-slate-950/70 border border-white/15 px-4 py-4 backdrop-blur-xl"
+              >
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center justify-center">
+                  <div
+                    className={`h-3 w-3 rounded-full shadow-[0_0_16px_rgba(248,250,252,0.95)] ${accentCfg.bulletDot}`}
+                  />
+                </div>
+                <div className="inline-flex items-center self-start rounded-full px-3 py-1 text-xs font-semibold text-slate-900 bg-white">
+                  {step.tag}
+                </div>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-50">
+                  {step.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-200/90">
+                  {step.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderSlideContent = (slide: Slide) => {
     const variant = slide.variant ?? 'default';
 
+    // ROADMAP
     if (variant === 'roadmap' && slide.roadmap) {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1060,6 +1241,7 @@ export default function GC2026DeckPage() {
       );
     }
 
+    // DEVICES
     if (variant === 'devices' && slide.devices) {
       return (
         <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1.1fr)] items-center">
@@ -1083,7 +1265,7 @@ export default function GC2026DeckPage() {
                 {renderHighlightedText(
                   slide.highlight,
                   slide.highlightWords,
-                  accent
+                  current.accent ?? defaultAccent
                 )}
               </p>
             )}
@@ -1107,7 +1289,7 @@ export default function GC2026DeckPage() {
                       {renderHighlightedText(
                         item,
                         slide.highlightWords,
-                        accent
+                        current.accent ?? defaultAccent
                       )}
                     </span>
                   </motion.li>
@@ -1121,12 +1303,13 @@ export default function GC2026DeckPage() {
             )}
           </div>
           <div className="flex justify-center lg:justify-end">
-            <DeviceCarousel devices={slide.devices} accent={accent} />
+            {renderDevices(slide.devices)}
           </div>
         </div>
       );
     }
 
+    // CARDS (vários slides 3.x, 4 e 5)
     if (variant === 'cards' && slide.cards) {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1150,12 +1333,12 @@ export default function GC2026DeckPage() {
               {renderHighlightedText(
                 slide.highlight,
                 slide.highlightWords,
-                accent
+                current.accent ?? defaultAccent
               )}
             </p>
           )}
 
-          {renderCardsGrid(slide.cards, accent)}
+          {renderCardsGrid(slide.cards, current.accent ?? defaultAccent)}
 
           {slide.footer && (
             <p className="mt-4 text-xs sm:text-sm text-slate-400">
@@ -1166,6 +1349,7 @@ export default function GC2026DeckPage() {
       );
     }
 
+    // SLIDE com pillSections (Escopo real)
     if (slide.pillSections && slide.id === 'escopo-geral') {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1181,11 +1365,12 @@ export default function GC2026DeckPage() {
               </p>
             )}
           </div>
-          {renderCardsGrid(slide.pillSections, accent)}
+          {renderCardsGrid(slide.pillSections, current.accent ?? defaultAccent)}
         </div>
       );
     }
 
+    // SLIDE específico: onboarding 0–90
     if (slide.id === 'frente-onboarding') {
       return (
         <div className="relative flex flex-col gap-4">
@@ -1222,7 +1407,7 @@ export default function GC2026DeckPage() {
                     {renderHighlightedText(
                       item,
                       slide.highlightWords,
-                      accent
+                      current.accent ?? defaultAccent
                     )}
                   </span>
                 </motion.li>
@@ -1235,6 +1420,111 @@ export default function GC2026DeckPage() {
       );
     }
 
+    // SLIDE específico: 7.4 – Performance + dashboard fake
+    if (slide.id === 'frente-performance') {
+      return (
+        <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1.1fr)] items-start">
+          <div className="flex flex-col gap-4">
+            <div>
+              <h1
+                className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+              >
+                {slide.title}
+              </h1>
+              {slide.subtitle && (
+                <p className="mt-2 text-base sm:text-lg text-slate-200">
+                  {slide.subtitle}
+                </p>
+              )}
+            </div>
+
+            {slide.bullets && (
+              <motion.ul
+                className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
+                variants={listVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {slide.bullets.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    variants={itemVariants}
+                    className="flex gap-3"
+                  >
+                    <span
+                      className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+                    />
+                    <span>
+                      {renderHighlightedText(
+                        item,
+                        slide.highlightWords,
+                        current.accent ?? defaultAccent
+                      )}
+                    </span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </div>
+
+          <div className="flex justify-center lg:justify-end">
+            {renderPerformanceDashboard()}
+          </div>
+        </div>
+      );
+    }
+
+    // SLIDE específico: 7.5 – Cultura, rituais e reconhecimento + trilha de tempo de casa
+    if (slide.id === 'frente-cultura') {
+      return (
+        <div className="relative flex flex-col gap-4">
+          <div>
+            <h1
+              className={`text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${accentCfg.titleGradient}`}
+            >
+              {slide.title}
+            </h1>
+            {slide.subtitle && (
+              <p className="mt-2 text-base sm:text-lg text-slate-200">
+                {slide.subtitle}
+              </p>
+            )}
+          </div>
+
+          {slide.bullets && (
+            <motion.ul
+              className="mt-2 space-y-2 text-base sm:text-lg text-slate-100/90"
+              variants={listVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {slide.bullets.map((item, i) => (
+                <motion.li
+                  key={i}
+                  variants={itemVariants}
+                  className="flex gap-3"
+                >
+                  <span
+                    className={`mt-[7px] h-1.5 w-1.5 rounded-full ${accentCfg.bulletDot}`}
+                  />
+                  <span>
+                    {renderHighlightedText(
+                      item,
+                      slide.highlightWords,
+                      current.accent ?? defaultAccent
+                    )}
+                  </span>
+                </motion.li>
+              ))}
+            </motion.ul>
+          )}
+
+          {renderRecognitionTimeline()}
+        </div>
+      );
+    }
+
+    // DEFAULT
     return (
       <div className="relative flex flex-col gap-4">
         <div>
@@ -1257,7 +1547,7 @@ export default function GC2026DeckPage() {
             {renderHighlightedText(
               slide.highlight,
               slide.highlightWords,
-              accent
+              current.accent ?? defaultAccent
             )}
           </p>
         )}
@@ -1282,7 +1572,7 @@ export default function GC2026DeckPage() {
                   {renderHighlightedText(
                     item,
                     slide.highlightWords,
-                    accent
+                    current.accent ?? defaultAccent
                   )}
                 </span>
               </motion.li>

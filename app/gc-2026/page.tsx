@@ -909,7 +909,7 @@ const DeviceCarousel = ({ devices, accent }: DeviceCarouselProps) => {
         className={`relative ${
           isPhone
             ? 'h-64 w-32 sm:h-72 sm:w-36 md:h-80 md:w-40'
-            : 'h-52 w-80 sm:h-56 sm:w-88 md:h-64 md:w-[22rem]'
+            : 'h-52 w-80 sm:h-56 md:h-64 md:w-[22rem]'
         } rounded-[32px] border border-white/25 bg-slate-950/90 shadow-[0_0_40px_rgba(15,23,42,0.9)] backdrop-blur-2xl overflow-hidden`}
       >
         {isPhone && (
@@ -1303,7 +1303,7 @@ export default function GC2026DeckPage() {
             )}
           </div>
           <div className="flex justify-center lg:justify-end">
-            {renderDevices(slide.devices)}
+            <DeviceCarousel devices={slide.devices ?? []} accent={accent} />
           </div>
         </div>
       );
